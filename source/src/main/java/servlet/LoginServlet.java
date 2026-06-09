@@ -1,5 +1,4 @@
 package servlet;
-//りんだりんだあああああああああああああああ
 
 import java.io.IOException;
 
@@ -15,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import dao.IdPwDAO;
 import dto.IdPw;
 import dto.LoginUser;
+//ここにあったdto.Resultが消えるため後で直します
 
 /**
  * Servlet implementation class LoginServlet
