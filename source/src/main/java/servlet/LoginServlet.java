@@ -1,5 +1,5 @@
 package servlet;
-//だるまさんがころんだ
+//りんだりんだあああああああああああああああ
 
 import java.io.IOException;
 
