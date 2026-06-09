@@ -2,7 +2,6 @@ package servlet;
 
 import java.io.IOException;
 
-import javax.naming.spi.DirStateFactory.Result;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.IdPwDAO;
+import dao.IdPwDao;
 import dto.IdPw;
+import dto.LoginResult;
 import dto.LoginUser;
-//ここにあったdto.Resultが消えるため後で直します
 
 /**
  * Servlet implementation class LoginServlet
@@ -30,7 +29,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// ログインページにフォワードする
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Login.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -46,7 +45,7 @@ public class LoginServlet extends HttpServlet {
 		String pw = request.getParameter("pw");
 
 		// ログイン処理を行う
-		IdPwDAO iDao = new IdPwDAO();
+		IdPwDao iDao = new IdPwDao();
 		if (iDao.isLoginOK(new IdPw(id, pw))) { // ログイン成功
 			// セッションスコープにIDを格納する
 			HttpSession session = request.getSession();
@@ -56,10 +55,10 @@ public class LoginServlet extends HttpServlet {
 			response.sendRedirect("/webapp/MenuServlet");
 		} else { // ログイン失敗
 			// リクエストスコープに、タイトル、メッセージ、戻り先を格納する
-			request.setAttribute("result", new Result("ログイン失敗！", "IDまたはPWに間違いがあります。", "/webapp/LoginServlet"));
+			request.setAttribute("result", new LoginResult("ログイン失敗！", "IDまたはPWに間違いがあります。", "/webapp/LoginServlet"));
 
 			// 結果ページにフォワードする
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/result.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/RegistResult.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
