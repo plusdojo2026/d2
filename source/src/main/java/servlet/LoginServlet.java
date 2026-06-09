@@ -1,7 +1,9 @@
 package servlet;
+//だるまさんがころんだ
 
 import java.io.IOException;
 
+import javax.naming.spi.DirStateFactory.Result;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import dao.IdPwDAO;
 import dto.IdPw;
 import dto.LoginUser;
-import dto.Result;
 
 /**
  * Servlet implementation class LoginServlet
