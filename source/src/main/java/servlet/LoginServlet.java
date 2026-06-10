@@ -41,8 +41,8 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// リクエストパラメータを取得する
 		request.setCharacterEncoding("UTF-8");
-		String id = request.getParameter("id");
-		String pw = request.getParameter("pw");
+		String id = request.getParameter("user_id");
+		String pw = request.getParameter("password");
 
 		// ログイン処理を行う
 		IdPwDao iDao = new IdPwDao();
@@ -52,10 +52,10 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("id", new LoginUser(id));
 
 			// メニューサーブレットにリダイレクトする
-			response.sendRedirect("/webapp/MenuServlet");
+			response.sendRedirect("/d2/JobSelectServlet");
 		} else { // ログイン失敗
 			// リクエストスコープに、タイトル、メッセージ、戻り先を格納する
-			request.setAttribute("result", new LoginResult("ログイン失敗！", "IDまたはPWに間違いがあります。", "/webapp/LoginServlet"));
+			request.setAttribute("result", new LoginResult("ログイン失敗！", "IDまたはPWに間違いがあります。", "/d2/LoginServlet"));
 
 			// 結果ページにフォワードする
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/RegistResult.jsp");

@@ -3,33 +3,43 @@ package dto;
 import java.io.Serializable;
 
 public class IdPw implements Serializable {
-	private String id; // ID
-	private String pw; // パスワード
+	private int id;
+	private String user_id; // ID
+	private String password; // パスワード
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getPw() {
-		return pw;
+	public String getUser_id() {
+		return user_id;
 	}
 
-	public void setPw(String pw) {
-		this.pw = pw;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 
-	public IdPw(String id, String pw) {
-		this.id = id;
-		this.pw = pw;
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public IdPw(String user_id, String password) {
+		this.user_id = user_id;
+		this.password = password;
 	}
 
 	public IdPw() {
-		this.id = "";
-		this.pw = "";
+		this.id = 0;
+		this.user_id = "";
+		this.password = "";
 	}
 
 }

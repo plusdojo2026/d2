@@ -19,15 +19,15 @@ public class IdPwDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BCard?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d2?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SELECT文を準備する
-			String sql = "SELECT count(*) FROM IdPw WHERE id=? AND pw=?";
+			String sql = "SELECT count(*) FROM IdPw WHERE user_id=? AND password=?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setString(1, idpw.getId());
-			pStmt.setString(2, idpw.getPw());
+			pStmt.setString(1, idpw.getUser_id());
+			pStmt.setString(2, idpw.getPassword());
 
 			// SELECT文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();
@@ -68,22 +68,22 @@ public class IdPwDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BCard?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d2?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "INSERT INTO idpw VALUES (?, ?)";
+			String sql = "INSERT INTO idpw VALUES (0, ?, ?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
-			if (idpw.getId() != null) {
-				pStmt.setString(1, idpw.getId());
+			if (idpw.getUser_id() != null) {
+				pStmt.setString(1, idpw.getUser_id());
 			} else {
 				pStmt.setString(1, "");
 			}
-			if (idpw.getPw() != null) {
-				pStmt.setString(2, idpw.getPw());
+			if (idpw.getPassword() != null) {
+				pStmt.setString(2, idpw.getPassword());
 			} else {
 				pStmt.setString(2, "");
 			}

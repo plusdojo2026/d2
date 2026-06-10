@@ -41,16 +41,16 @@ public class NewRegistServlet extends HttpServlet {
 
 		// リクエストパラメータを取得する
 		request.setCharacterEncoding("UTF-8");
-		String id = request.getParameter("id");
-		String pw = request.getParameter("pw");
+		String id = request.getParameter("user_id");
+		String pw = request.getParameter("password");
 
 		// ログイン処理を行う
 		IdPwDao iDao = new IdPwDao();
 		
 		if (iDao.insert(new IdPw(id, pw))) { // 登録成功
-			request.setAttribute("result", new LoginResult("登録成功！", "新規登録しました。", "/webapp/LoginServlet"));
+			request.setAttribute("result", new LoginResult("登録成功！", "新規登録しました。", "/d2/LoginServlet"));
 		} else { // 登録失敗
-			request.setAttribute("result", new LoginResult("登録失敗！", "新規登録できませんでした。", "/webapp/NewRegistServlet"));
+			request.setAttribute("result", new LoginResult("登録失敗！", "新規登録できませんでした。", "/d2/NewRegistServlet"));
 		}
 
 		// 結果ページにフォワードする
