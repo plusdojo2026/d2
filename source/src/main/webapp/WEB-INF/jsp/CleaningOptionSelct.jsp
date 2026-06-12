@@ -112,15 +112,15 @@
         <h3>オプションを選択（複数選択できます）</h3>
 
         <label class="option-box">
-            <input type="checkbox" name="option" value="水回りのトラブル"> 水回りのトラブル
+            <input type="checkbox" name="option" value="染み抜き"> 染み抜き
         </label>
 
         <label class="option-box">
-            <input type="checkbox" name="option" value="鍵の交換・修理"> 鍵の交換・修理
+            <input type="checkbox" name="option" value="防虫・防臭加工"> 防臭・防虫加工
         </label>
 
         <label class="option-box">
-            <input type="checkbox" name="option" value="エアコン修理"> エアコン修理
+            <input type="checkbox" name="option" value="撥水加工"> 撥水加工
         </label>
 
         <button type="submit" class="confirm-btn">確定</button>

@@ -112,15 +112,15 @@
         <h3>オプションを選択（複数選択できます）</h3>
 
         <label class="option-box">
-            <input type="checkbox" name="option" value="水回りのトラブル"> 水回りのトラブル
+            <input type="checkbox" name="option" value="大型粗大ごみ"> 大型粗大ごみ
         </label>
 
         <label class="option-box">
-            <input type="checkbox" name="option" value="鍵の交換・修理"> 鍵の交換・修理
+            <input type="checkbox" name="option" value="家具解体"> 家具解体
         </label>
 
         <label class="option-box">
-            <input type="checkbox" name="option" value="エアコン修理"> エアコン修理
+            <input type="checkbox" name="option" value="破棄"> 破棄
         </label>
 
         <button type="submit" class="confirm-btn">確定</button>

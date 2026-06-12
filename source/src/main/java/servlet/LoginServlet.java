@@ -13,7 +13,6 @@ import javax.servlet.http.HttpSession;
 import dao.IdPwDao;
 import dto.IdPw;
 import dto.LoginResult;
-import dto.LoginUser;
 
 /**
  * Servlet implementation class LoginServlet
@@ -41,18 +40,21 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// リクエストパラメータを取得する
 		request.setCharacterEncoding("UTF-8");
-		String id = request.getParameter("user_id");
+		//Integer id = Integer.parseInt(request.getParameter("id"));
+		String user_id = request.getParameter("user_id");
 		String pw = request.getParameter("password");
 
 		// ログイン処理を行う
 		IdPwDao iDao = new IdPwDao();
-		if (iDao.isLoginOK(new IdPw(id, pw))) { // ログイン成功
+		IdPw login = new IdPw(user_id, pw);
+		if (iDao.isLoginOK(login)) { // ログイン成功
 			// セッションスコープにIDを格納する
 			HttpSession session = request.getSession();
-			session.setAttribute("id", new LoginUser(id));
+			Integer id_data =  (Integer)login.getId();
+			session.setAttribute("id", id_data);
 
 			// メニューサーブレットにリダイレクトする
-			response.sendRedirect("/d2/JobSelectServlet");
+			response.sendRedirect("/d2/NewsServlet");
 		} else { // ログイン失敗
 			// リクエストスコープに、タイトル、メッセージ、戻り先を格納する
 			request.setAttribute("result", new LoginResult("ログイン失敗！", "IDまたはPWに間違いがあります。", "/d2/LoginServlet"));

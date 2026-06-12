@@ -20,6 +20,10 @@ public class Request implements Serializable {
 	private String image;
 	private String payment_method;
 	private int total_amount;
+	private int cost1;
+	private int cost2;
+	private int cost3;
+	private int cost4;
 	
 	public Request() {
 		this.id_reservation = 0;
@@ -39,9 +43,13 @@ public class Request implements Serializable {
 		this.image = "";
 		this.payment_method = "";
 		this.total_amount = 0;
+		this.cost1 = 0;
+		this.cost2 = 0;
+		this.cost3 = 0;
+		this.cost4 = 0;
 	}
 	
-	//追加とか?
+	//追加とか?(網羅してあるやつ)
 	public Request(int id_reservation, int id_chara, String category, String thisdate,
 			String option1, String option2, String option3, String option4, String date,
 			String time, String tell, String mailaddress, String address, String memo,
@@ -65,6 +73,7 @@ public class Request implements Serializable {
 		this.total_amount = total_amount;
 	}
 	
+	//予約成功、通知用
 	public Request(String thisdate, String date, String category, String option1, String option2,
 			String option3, String option4, int total_amount, String payment_method) {
 		this.thisdate = thisdate;
@@ -77,6 +86,25 @@ public class Request implements Serializable {
 		this.total_amount = total_amount;
 		this.payment_method = payment_method;
 	}
+	
+	//料金精算用
+	public Request(String option1, String option2, String option3, String option4, int total_amount) {
+		this.option1 = option1;
+		this.option2 = option2;
+		this.option3 = option3;
+		this.option4 = option4;
+		this.total_amount = total_amount;
+	}
+	
+	//オプションのコスト用
+	public Request(int cost1, int cost2, int cost3, int cost4) {
+		this.cost1 = cost1;
+		this.cost2 = cost2;
+		this.cost3 = cost3;
+		this.cost4 = cost4;
+	}
+	
+	
 
 	public int getId_reservation() {
 		return id_reservation;

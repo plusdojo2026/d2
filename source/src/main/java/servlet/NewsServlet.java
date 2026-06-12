@@ -11,64 +11,66 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.InfoDao;
 import dao.MaintenanceDao;
 import dao.RequestDao;
+import dto.Info;
+import dto.Maintenance;
+import dto.Request;
 
-
-@WebServlet("/news")
+@WebServlet("/NewsServlet")
 public class NewsServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        
-        // 3つのDAOをインスタンス化
-        RequestDao requestDao = new RequestDao();
-        InfoDao infoDao = new InfoDao();
-        MaintenanceDao maintenanceDao = new MaintenanceDao();
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+		// セッションからログイン中のユーザーIDを取得
+		HttpSession session = request.getSession();
+		String id = (String)session.getAttribute("id");
+		//String id = "1";
+		System.out.println("ID:" + id);
+		//String userId = (loginUser != null) ? loginUser.getId() : "";
 
-        // 3つのModelをすべて混在させて管理するための汎用リスト
-        List<Object> allNewsList = new ArrayList<>();
+		RequestDao requestDao = new RequestDao();
+		InfoDao infoDao = new InfoDao();
+		MaintenanceDao maintenanceDao = new MaintenanceDao();
 
-        // 各DAOから、メソッド書き直す
-        allNewsList.addAll(requestDao.getNotifications());     // Request型が入る
-        allNewsList.addAll(infoDao.getNotifications());        // Info型が入る
-        allNewsList.addAll(maintenanceDao.getNotifications()); // Maintenance型が入る
+		List<Object> allNewsList = new ArrayList<>();
 
-        // 集まったデータを日付の新しい順にソート
-        Collections.sort(allNewsList, new Comparator<Object>() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                String date1 = getDateFromModel(o1);
-                String date2 = getDateFromModel(o2);
-                
-                if (date1 == null || date2 == null) {
-                    return 0;
-                }
-                // 文字列の降順ソート（新しい日付が上に来る）
-                return date2.compareTo(date1);
-            }
+		// 取得した userId を引数に渡して絞り込む
+		allNewsList.addAll(requestDao.getNotifications(id));
+		allNewsList.addAll(infoDao.getNotifications());
+		allNewsList.addAll(maintenanceDao.getNotifications());
 
-            // それぞれのModelから日付文字列（varchar型データ）を抜き出すための補助メソッド
-            private String getDateFromModel(Object obj) {
-                if (obj instanceof javaModelRequest) { // 18番のModel
-                 
-                    return ((javaModelRequest) obj).getDate(); 
-                } else if (obj instanceof javaModelInfo) { // 22番のModel
-                    return ((javaModelInfo) obj).getDate_info();
-                } else if (obj instanceof javaModelMaintenance) { // 23番のModel
-                    return ((javaModelMaintenance) obj).getDate_maintenance();
-                }
-                return "";
-            }
-        });
-        
-        request.setAttribute("notifications", allNewsList);
+		Collections.sort(allNewsList, new Comparator<Object>() {
+			@Override
+			public int compare(Object o1, Object o2) {
+				String date1 = getDateFromModel(o1);
+				String date2 = getDateFromModel(o2);
+				
+				if (date1 == null || date2 == null) {
+					return 0;
+				}
+				return date2.compareTo(date1);
+			}
 
-       
-        request.getRequestDispatcher("/WEB-INF/jsp/News.jsp").forward(request, response);
-    }
+			private String getDateFromModel(Object obj) {
+				if (obj instanceof Request) { 
+					return ((Request) obj).getDate(); 
+				} else if (obj instanceof Info) { 
+					return ((Info) obj).getDate_info();
+				} else if (obj instanceof Maintenance) { 
+					return ((Maintenance) obj).getDate_maintenance();
+				}
+				return "";
+			}
+		});
+		
+		request.setAttribute("notifications", allNewsList);
+		request.getRequestDispatcher("/WEB-INF/jsp/News.jsp").forward(request, response);
+	}
 }
