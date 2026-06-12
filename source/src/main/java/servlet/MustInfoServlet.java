@@ -79,11 +79,14 @@ public class MustInfoServlet extends HttpServlet {
 
         // ★ DAO で reservations に INSERT
         ReservationDAO dao = new ReservationDAO();
-        boolean result = dao.insert(dto);
+        int reservationId = dao.insert(dto);
 
-        if (!result) {
+        if (reservationId == -1) {
             throw new ServletException("予約データの登録に失敗しました");
         }
+
+        // 完了画面へ ID を渡す
+        request.setAttribute("reservationId", reservationId);
 
         // ★ 完了画面へ
         request.getRequestDispatcher("/WEB-INF/jsp/ReservationComplete.jsp")

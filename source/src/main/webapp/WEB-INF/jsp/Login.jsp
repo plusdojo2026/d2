@@ -5,18 +5,22 @@
 <head>
 <meta charset="UTF-8">
 <title>ログイン</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css">
 </head>
 <body>
+<header>
+	<img src="${pageContext.request.contextPath}/img/logo.png" alt="しの結び" class="logo">
+</header>
 <main>
-	<p id="msg"></p>
-		<form method="POST" action="/d2/LoginServlet" id="form">
-			<input type="text" name="user_id" placeholder="ID"><br>
-			<input type="password" name="password" placeholder="PW"><br>
-			<input type="submit" value="ログイン"><br>
-		</form>
-		<form method="GET" action="/d2/NewRegistServlet">
-			<input type="submit" value="新規登録">
-		</form>
+    <p id="msg"></p>
+        <form method="POST" action="/d2/LoginServlet" id="form">
+            <input type="text" name="user_id" placeholder="ID"><br>
+            <input type="password" name="password" placeholder="PW"><br>
+            <input type="submit" value="ログイン"><br>
+        </form>
+        <form method="GET" action="/d2/NewRegistServlet">
+            <input type="submit" value="新規登録">
+        </form>
  </main>
  <script src="js/Login.js"></script>
 </body>

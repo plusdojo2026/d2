@@ -10,7 +10,48 @@ import dto.IdPw;
 
 public class IdPwDao {
 	// 引数で指定されたidpwでログイン成功ならtrueを返す
-	public boolean isLoginOK(IdPw idpw) {
+		// isLoginOkは廃止。idを返す目的に変更
+		public IdPw getLoginUser(IdPw idpw) {
+		    Connection conn = null;
+		    //Query結果で該当ユーザがなければNullが返る。
+		    IdPw result = null;
+
+		    try {
+		        Class.forName("com.mysql.cj.jdbc.Driver");
+		        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d2?"
+		                + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9"
+		                + "&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true",
+		                "root", "password");
+
+		        String sql = "SELECT id, user_id, password FROM IdPw WHERE user_id=? AND password=?";
+		        PreparedStatement pStmt = conn.prepareStatement(sql);
+		        pStmt.setString(1, idpw.getUser_id());
+		        pStmt.setString(2, idpw.getPassword());
+
+		        ResultSet rs = pStmt.executeQuery();
+
+		        if (rs.next()) {
+		        	//DTOの構成でuser_id/passwordから特定マッチレコードを見つけDTO変数にレコード代入。
+		            result = new IdPw(rs.getString("user_id"), rs.getString("password"));
+		            //上の処理ではidの値がセットされていない状態なのでQueryの結果からidを取り出しDTO変数にセット
+		            result.setId(rs.getInt("id"));
+		        }
+		    } catch (SQLException | ClassNotFoundException e) {
+		        e.printStackTrace();
+		    } finally {
+		        if (conn != null) {
+		            try {
+		                conn.close();
+		            } catch (SQLException e) {
+		                e.printStackTrace();
+		            }
+		        }
+		    }
+		    //３つの変数がセットされた塊DTO　IdPw resultを返却。
+		    return result;
+		}
+	// 引数で指定されたidpwでログイン成功ならtrueを返す
+	/*public boolean isLoginOK(IdPw idpw) {
 		Connection conn = null;
 		boolean loginResult = false;
 
@@ -57,7 +98,7 @@ public class IdPwDao {
 
 		// 結果を返す
 		return loginResult;
-	}
+	}*/
 	
 	public boolean insert(IdPw idpw) {
 		Connection conn = null;

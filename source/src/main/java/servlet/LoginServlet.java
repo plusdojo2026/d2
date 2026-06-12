@@ -46,14 +46,19 @@ public class LoginServlet extends HttpServlet {
 
 		// ログイン処理を行う
 		IdPwDao iDao = new IdPwDao();
+		//ID/PWの格納インスタンス作成
 		IdPw login = new IdPw(user_id, pw);
-		if (iDao.isLoginOK(login)) { // ログイン成功
+		
+		// 修正: getLoginUser() を使用　isLoginOk()は廃止
+	    // loginUserはIdPwの構成でユーザ情報を塊で取得
+		IdPw loginUser = iDao.getLoginUser(login);
+		
+		if (loginUser != null) { // ログイン成功
 			// セッションスコープにIDを格納する
 			HttpSession session = request.getSession();
-			Integer id_data =  (Integer)login.getId();
-			session.setAttribute("id", id_data);
-
-			// メニューサーブレットにリダイレクトする
+			//ユーザ情報の塊からid部分を取り出す。
+			session.setAttribute("id", loginUser.getId());
+			 //成功の場合は以下に転送して値はリクエストスコープで渡しJSPでは"id"で受け取る。
 			response.sendRedirect("/d2/NewsServlet");
 		} else { // ログイン失敗
 			// リクエストスコープに、タイトル、メッセージ、戻り先を格納する

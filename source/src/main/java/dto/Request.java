@@ -20,6 +20,7 @@ public class Request implements Serializable {
 	private String image;
 	private String payment_method;
 	private int total_amount;
+	private int costst;
 	private int cost1;
 	private int cost2;
 	private int cost3;
@@ -43,6 +44,7 @@ public class Request implements Serializable {
 		this.image = "";
 		this.payment_method = "";
 		this.total_amount = 0;
+		this.costst = 0;
 		this.cost1 = 0;
 		this.cost2 = 0;
 		this.cost3 = 0;
@@ -97,11 +99,17 @@ public class Request implements Serializable {
 	}
 	
 	//オプションのコスト用
-	public Request(int cost1, int cost2, int cost3, int cost4) {
+	public Request(String option1, String option2, String option3, String option4, int costst, int cost1, int cost2, int cost3, int cost4, int total_amount) {
+		this.option1 = option1;
+		this.option2 = option2;
+		this.option3 = option3;
+		this.option4 = option4;
+		this.costst = costst;
 		this.cost1 = cost1;
 		this.cost2 = cost2;
 		this.cost3 = cost3;
 		this.cost4 = cost4;
+		this.total_amount = total_amount;
 	}
 	
 	
@@ -237,10 +245,65 @@ public class Request implements Serializable {
 	public int getTotal_amount() {
 		return total_amount;
 	}
+	
+	public int getCostst() {
+		return costst;
+	}
+
+	public void setCostst(int costst) {
+		this.costst = costst;
+	}
 
 	public void setTotal_amount(int total_amount) {
 		this.total_amount = total_amount;
 	}
 	
+	 public int getCost1() {
+		return cost1;
+	}
+
+	public void setCost1(int cost1) {
+		this.cost1 = cost1;
+	}
+
+	public int getCost2() {
+		return cost2;
+	}
+
+	public void setCost2(int cost2) {
+		this.cost2 = cost2;
+	}
+
+	public int getCost3() {
+		return cost3;
+	}
+
+	public void setCost3(int cost3) {
+		this.cost3 = cost3;
+	}
+
+	public int getCost4() {
+		return cost4;
+	}
+
+	public void setCost4(int cost4) {
+		this.cost4 = cost4;
+	}
+
+	// ここをデバッグのために追加
+    @Override
+    public String toString() {
+        return "Request{" +
+                "thisdate='" + thisdate + '\'' +
+                ", date='" + date + '\'' +
+                ", category='" + category + '\'' +
+                ", option1='" + option1 + '\'' +
+                ", option2='" + option2 + '\'' +
+                ", option3='" + option3 + '\'' +
+                ", option4='" + option4 + '\'' +
+                ", total_amount=" + total_amount +
+                ", payment_method='" + payment_method + '\'' +
+                '}';
+    }
 	
 }

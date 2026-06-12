@@ -30,9 +30,14 @@ public class NewsServlet extends HttpServlet {
 		
 		// セッションからログイン中のユーザーIDを取得
 		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("id");
+		Integer id = (Integer)session.getAttribute("id");
+		if (id == null) {
+	        response.sendRedirect("/d2/LoginServlet");
+	        return;
+	    }
+		String idstr = String.valueOf(id);
 		//String id = "1";
-		System.out.println("ID:" + id);
+		System.out.println("ID:" + idstr);
 		//String userId = (loginUser != null) ? loginUser.getId() : "";
 
 		RequestDao requestDao = new RequestDao();
@@ -42,7 +47,7 @@ public class NewsServlet extends HttpServlet {
 		List<Object> allNewsList = new ArrayList<>();
 
 		// 取得した userId を引数に渡して絞り込む
-		allNewsList.addAll(requestDao.getNotifications(id));
+		allNewsList.addAll(requestDao.getNotifications(idstr));
 		allNewsList.addAll(infoDao.getNotifications());
 		allNewsList.addAll(maintenanceDao.getNotifications());
 

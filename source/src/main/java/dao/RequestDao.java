@@ -31,7 +31,7 @@ public class RequestDao {
 					"root", "password");
 
 			// SQL文を準備する(要修正)
-			String sql = "SELECT thisdate, date, time, category, option1, option2, option3, "
+			String sql = "SELECT thisdate, date, category, time, option1, option2, option3, "
 					+ "option4, total_amount, payment_method FROM Request "
 					+ "WHERE id_reservation = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
@@ -49,13 +49,14 @@ public class RequestDao {
 				result.setDate(rs.getString("date"));
 				result.setTime(rs.getString("time"));
 				result.setCategory(rs.getString("category"));
-				result.setOption1(rs.getString("option1"));	
+				result.setOption1(rs.getString("option1"));
 				result.setOption2(rs.getString("option2"));
 				result.setOption3(rs.getString("option3"));
-				result.setOption1(rs.getString("option4"));
+				result.setOption4(rs.getString("option4"));
 				result.setTotal_amount(rs.getInt("total_amount"));
 				result.setPayment_method(rs.getString("payment_method"));
 			}
+			System.out.println(result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			result = null;
@@ -79,7 +80,7 @@ public class RequestDao {
 	}
 	
 	//料金精算画面
-	public List<Request> seletCost(Request req) {
+	/*public List<Request> seletCost(Request req) {
 		Connection conn = null;
 		List<Request> reqList = new ArrayList<Request>();
 
@@ -135,12 +136,12 @@ public class RequestDao {
 
 		// 結果を返す
 		return reqList;
-	}
+	}*/
 	
 	//金額との内部結合
-		public List<Request> seletOption(Request req) {
+		public Request seletOption(String id) {
 			Connection conn = null;
-			List<Request> reqList = new ArrayList<Request>();
+			Request result = null;
 
 			try {
 				// JDBCドライバを読み込む
@@ -152,36 +153,51 @@ public class RequestDao {
 						"root", "password");
 
 				// SQL文を準備する(要修正)
-				String sql = "SELECT r.option1, c1.optionCost AS Cost1, r.option2, c2.optionCost AS Cost2, "
-						+ "r.option3, c3.optionCost AS Cost3, r.option4, c4.optionCost AS Cost4 FROM Request "
+				String sql = "SELECT r.category, cst.optionCost AS CostSt, r.option1, c1.optionCost AS Cost1, r.option2, c2.optionCost AS Cost2, "
+						+ "r.option3, c3.optionCost AS Cost3, r.option4, c4.optionCost AS Cost4 FROM Request r "
+						+ "LEFT JOIN Cost cst ON r.category = cst.optionNAME "
 						+ "LEFT JOIN Cost c1 ON r.option1 = c1.optionNAME "
 						+ "LEFT JOIN Cost c2 ON r.option2 = c2.optionNAME "
 						+ "LEFT JOIN Cost c3 ON r.option3 = c3.optionNAME "
-						+ "LEFT JOIN Cost c4 ON r.option4 = c4.optionNAME ";
+						+ "LEFT JOIN Cost c4 ON r.option4 = c4.optionNAME "
+						+ "WHERE id_reservation = ?";
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 
 				// SQL文を完成させる
-				pStmt.setInt(1, req.getId_reservation());
-				pStmt.setInt(2, req.getId_chara());
+				pStmt.setString(1, id);
 				
 				// SQL文を実行し、結果表を取得する
 				ResultSet rs = pStmt.executeQuery();
 
 				// 結果表をコレクションにコピーする
-				while (rs.next()) {
-					Request reque = new Request(
-							rs.getInt("Cost1"),
-							rs.getInt("Cost2"),
-							rs.getInt("Cost3"),
-							rs.getInt("Cost4"));
-					reqList.add(reque);
+				if(rs.next()) {
+					result = new Request();
+					result.setCategory(rs.getString("r.category"));
+					result.setOption1(rs.getString("r.option1")); 
+					result.setOption2(rs.getString("r.option2")); 
+					result.setOption3(rs.getString("r.option3")); 
+					result.setOption4(rs.getString("r.option4")); 
+					result.setCostst(rs.getInt("CostSt"));
+					result.setCost1(rs.getInt("Cost1"));
+					result.setCost2(rs.getInt("Cost2"));
+					result.setCost3(rs.getInt("Cost3"));
+					result.setCost4(rs.getInt("Cost4"));
+					//下 total_amountに入れるため
+					int costSt = rs.getInt("CostSt");
+					int cost1 = rs.getInt("Cost1");
+					int cost2 = rs.getInt("Cost2");
+					int cost3 = rs.getInt("Cost3");
+					int cost4 = rs.getInt("Cost4");
+					int total = costSt + cost1 + cost2 + cost3 + cost4;
+					result.setTotal_amount(total);
 				}
+				System.out.println(result);
 			} catch (SQLException e) {
 				e.printStackTrace();
-				reqList = null;
+				result = null;
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-				reqList = null;
+				result = null;
 			} finally {
 				// データベースを切断
 				if (conn != null) {
@@ -189,13 +205,13 @@ public class RequestDao {
 						conn.close();
 					} catch (SQLException e) {
 						e.printStackTrace();
-						reqList = null;
+						result = null;
 					}
 				}
 			}
 
 			// 結果を返す
-			return reqList;
+			return result;
 		}
 		
 		//通知用
@@ -232,7 +248,14 @@ public class RequestDao {
 							);
 					reqList.add(reque);
 				}
-				System.out.println(reqList);
+				
+				// デバッグコード
+				System.out.println("===== reqList Debug =====");
+				System.out.println("Size: " + reqList.size());
+				for (Request req : reqList) {
+				    System.out.println(req);
+				}
+				System.out.println("========================");
 			} catch (SQLException e) {
 				e.printStackTrace();
 				reqList = null;

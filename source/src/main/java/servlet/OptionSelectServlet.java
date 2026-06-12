@@ -15,6 +15,7 @@ public class OptionSelectServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+        // ★ MustInfo のキャンセルボタンから来た場合もここに入る
         // OptionSelect.jsp を表示
         req.getRequestDispatcher("/WEB-INF/jsp/OptionSelect.jsp")
            .forward(req, resp);

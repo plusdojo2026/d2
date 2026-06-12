@@ -35,7 +35,7 @@ public class ResultServlet extends HttpServlet {
 				//データ取得
 				RequestDao dao = new RequestDao();
 				//Request data = dao.findById(id_reservation);
-				Request data = dao.selectSuccess(1);
+				Request data = dao.selectSuccess(2);
 
 				//失敗(データが見つからない)
 				if(data == null){

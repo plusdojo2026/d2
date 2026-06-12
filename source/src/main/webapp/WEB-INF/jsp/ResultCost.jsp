@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="ja">
 <head>
@@ -17,10 +18,21 @@
     <!-- ===== 中身：ユーザーが確認・操作する情報の本体 ===== -->
     <main>
         <form id="paymentForm" action="ResultServlet" method="post">
-
-            <!-- ${dto.xxx} で、Servletから渡された DTO の中身を画面に差し込む -->
-            <p>選択したオプション:${dto.option}</p>
-            <p>合計金額:${dto.totalAmount}円</p>
+        <p>選択した業種:${dto.category} ${dto.costst}円</p>
+            <p>選択したオプション:</p>
+            <c:if test="${not empty dto.option1}">
+            <p>${dto.option1}:${dto.cost1}円</p>
+        </c:if>
+        <c:if test="${not empty dto.option2}">
+            <p>${dto.option2}:${dto.cost2}円</p>
+        </c:if>
+        <c:if test="${not empty dto.option3}">
+            <p>${dto.option3}:${dto.cost3}円</p>
+        </c:if>
+        <c:if test="${not empty dto.option4}">
+            <p>${dto.option4}:${dto.cost4}</p>
+        </c:if>
+            <p>合計金額:${dto.total_amount}円</p>
 
             <!-- 支払い方法選択（同じ name="payment" で1つだけ選べる） -->
             <fieldset>
