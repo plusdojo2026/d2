@@ -167,7 +167,8 @@
 <form action="${pageContext.request.contextPath}/OptionSelectServlet"
       method="post"
       onsubmit="return validateOptionForm()">
-
+      
+      <input type="hidden" name="job" value="${job}">
     <input type="hidden" name="date" id="dateInput">
     <input type="hidden" name="selectedTime" id="timeInput">
 

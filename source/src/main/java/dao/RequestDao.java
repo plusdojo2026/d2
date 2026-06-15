@@ -237,7 +237,7 @@ public class RequestDao {
 				pStmt.setInt(2, total);
 				pStmt.setString(3, reqId);
 				
-				System.out.println(sql);
+				System.out.println("update:"+sql);
 				
 				// SQL文を実行する
 				if (pStmt.executeUpdate() == 1) {
