@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class RequestDao {
     private static final String DB_PASS = "password";
 	// 引数req指定された項目で検索して、取得されたデータのリストを返す
 	//予約成功
-	public Request selectSuccess(int id) {
+	public Request selectSuccess(String id) {
 		Connection conn = null;
 		Request result = null;
 
@@ -37,7 +38,7 @@ public class RequestDao {
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる
-			pStmt.setInt(1, id);
+			pStmt.setString(1, id);
 			
 			// SQL文を実行し、結果表を取得する
 			ResultSet rs = pStmt.executeQuery();
@@ -162,7 +163,7 @@ public class RequestDao {
 						+ "LEFT JOIN Cost c4 ON r.option4 = c4.optionNAME "
 						+ "WHERE id_reservation = ?";
 				PreparedStatement pStmt = conn.prepareStatement(sql);
-
+				System.out.println("option:"+id);
 				// SQL文を完成させる
 				pStmt.setString(1, id);
 				
@@ -206,6 +207,53 @@ public class RequestDao {
 					} catch (SQLException e) {
 						e.printStackTrace();
 						result = null;
+					}
+				}
+			}
+
+			// 結果を返す
+			return result;
+		}
+		
+		public boolean update(String payment, int total, String reqId) {
+			Connection conn = null;
+			boolean result = false;
+
+			try {
+				// JDBCドライバを読み込む
+				Class.forName("com.mysql.cj.jdbc.Driver");
+
+				// データベースに接続する
+				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d2?"
+						+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
+						"root", "password");
+
+				// SQL文を準備する
+				String sql = "UPDATE Request SET payment_method=?, total_amount=?, success=true WHERE id_reservation=?";
+				PreparedStatement pStmt = conn.prepareStatement(sql);
+
+				// SQL文を完成させる
+				pStmt.setString(1, payment);
+				pStmt.setInt(2, total);
+				pStmt.setString(3, reqId);
+				
+				System.out.println(sql);
+				
+				// SQL文を実行する
+				if (pStmt.executeUpdate() == 1) {
+					result = true;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} finally {
+				// データベースを切断
+				if (conn != null) {
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
 					}
 				}
 			}
@@ -276,109 +324,54 @@ public class RequestDao {
 			return reqList;
 		}
 		
-	public boolean insert(Request req) {
+	public String insert(Request req, String userId) {
 		Connection conn = null;
-		boolean result = false;
+		boolean regist = false;
+		String result = null;
 
 		try {
 			// JDBCドライバを読み込む
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/BCard?"
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d2?"
 					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
 					"root", "password");
 
 			// SQL文を準備する
-			String sql = "INSERT INTO Request VALUES (0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			PreparedStatement pStmt = conn.prepareStatement(sql);
+			String sql = "INSERT INTO Request (id_reservation, id_chara, category, date, time, option1, option2, option3, option4, tell, mailaddress, address, memo, image, thisdate) " +
+			        "VALUES (0, ?, ?, ?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?, ?)";
 
-			// SQL文を完成させる
-			if (req.getId_chara() != 0) {
-				pStmt.setInt(1, req.getId_chara());
-			} else {
-				pStmt.setString(1, "");
-			}
-			if (req.getCategory() != null) {
-				pStmt.setString(2, req.getCategory());
-			} else {
-				pStmt.setString(2, "");
-			}
-			
-			LocalDate today = LocalDate.now();
-			String todayStr = today.toString();  // "2026-05-01" のような形式
-			pStmt.setString(3, todayStr);
-			
-			if (req.getOption1() != null) {
-				pStmt.setString(4, req.getOption1());
-			} else {
-				pStmt.setString(4, "");
-			}
-			if (req.getOption2() != null) {
-				pStmt.setString(5, req.getOption2());
-			} else {
-				pStmt.setString(5, "");
-			}
-			if (req.getOption3() != null) {
-				pStmt.setString(6, req.getOption3());
-			} else {
-				pStmt.setString(6, "");
-			}
-			if (req.getOption4() != null) {
-				pStmt.setString(7, req.getOption4());
-			} else {
-				pStmt.setString(7, "");
-			}
-			if (req.getDate() != null) {
-				pStmt.setString(8, req.getDate());
-			} else {
-				pStmt.setString(8, "");
-			}
-			if (req.getTime() != null) {
-				pStmt.setString(9, req.getTime());
-			} else {
-				pStmt.setString(9, "");
-			}
-			if (req.getTell() != null) {
-				pStmt.setString(10, req.getTell());
-			} else {
-				pStmt.setString(10, "");
-			}
-			if(req.getMailaddress() != null) {
-				pStmt.setString(11, req.getMailaddress());
-			} else {
-				pStmt.setString(11, "");
-			}
-			if (req.getAddress() != null) {
-				pStmt.setString(12, req.getAddress());
-			} else {
-				pStmt.setString(12, "");
-			}
-			if (req.getMemo() != null) {
-				pStmt.setString(13, req.getMemo());
-			} else {
-				pStmt.setString(13, "");
-			}
-			if (req.getImage() != null) {
-				pStmt.setString(14, req.getImage());
-			} else {
-				pStmt.setString(14, "");
-			}
-			if (req.getPayment_method() != null) {
-				pStmt.setString(15, req.getPayment_method());
-			} else {
-				pStmt.setString(15, "");
-			}
-			if (req.getTotal_amount() != 0) {
-				pStmt.setInt(16, req.getTotal_amount());
-			} else {
-				pStmt.setString(16, "");
-			}
+			PreparedStatement pStmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
+	        pStmt.setString(1, userId);
+	        pStmt.setString(2, req.getCategory());
+	        pStmt.setString(3, req.getDate());
+	        pStmt.setString(4, req.getTime());
+	        pStmt.setString(5, req.getOption1() != null ? req.getOption1() : "");
+	        pStmt.setString(6, req.getOption2() != null ? req.getOption2() : "");
+	        pStmt.setString(7, req.getOption3() != null ? req.getOption3() : "");
+	        pStmt.setString(8, req.getOption4() != null ? req.getOption4() : "");
+	        pStmt.setString(9, req.getTell() != null ? req.getTell() : "");
+	        pStmt.setString(10, req.getMailaddress() != null ? req.getMailaddress() : "");
+	        pStmt.setString(11, req.getAddress() != null ? req.getAddress() : "");
+	        pStmt.setString(12, req.getMemo() != null ? req.getMemo() : "");
+	        pStmt.setString(13, req.getImage() != null ? req.getImage() : "");
+	        
+	        LocalDate today = LocalDate.now();
+	        pStmt.setString(14, today.toString());
+			
+			System.out.println(pStmt);
+			
 			// SQL文を実行する
-			if (pStmt.executeUpdate() == 1) {
-				result = true;
+			if (pStmt.executeUpdate() == 1 ) {
+				regist = true;
+				ResultSet rs = pStmt.getGeneratedKeys();
+	            if (rs.next()) {
+	                result = String.valueOf(rs.getLong(1));
+	            }
 			}
+			System.out.println("reqDao:"+result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -393,7 +386,6 @@ public class RequestDao {
 				}
 			}
 		}
-
 		// 結果を返す
 		return result;
 	}

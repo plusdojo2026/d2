@@ -9,10 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import dao.ReservationDAO;
-import dto.ReservationDTO;
+import dao.RequestDao;
+import dto.Request;
 
 @WebServlet("/MustInfoServlet")
 @MultipartConfig(
@@ -40,11 +41,14 @@ public class MustInfoServlet extends HttpServlet {
         String job = (String) request.getSession().getAttribute("job");
         String date = (String) request.getSession().getAttribute("date");
         String time = (String) request.getSession().getAttribute("time");
-        String[] options = (String[]) request.getSession().getAttribute("options");
+        String option1 = (String) request.getSession().getAttribute("option1");
+        String option2 = (String) request.getSession().getAttribute("option2");
+        String option3 = (String) request.getSession().getAttribute("option3");
+        String option4 = (String) request.getSession().getAttribute("option4");
 
-        // options を文字列に変換
+        /* options を文字列に変換
         String optionsText = (options != null) ? String.join(",", options) : "";
-
+*/
         // ★ MustInfo の入力値
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
@@ -65,32 +69,44 @@ public class MustInfoServlet extends HttpServlet {
         }
 
         // ★ ReservationDTO にまとめる
-        ReservationDTO dto = new ReservationDTO(
+        Request dto = new Request(
                 job,
                 date,
                 time,
-                optionsText,
+                option1,
+                option2,
+                option3,
+                option4,
                 phone,
                 email,
                 destination,
                 note,
                 fileName
         );
+        
+        HttpSession session = request.getSession();
+		Integer id = (Integer)session.getAttribute("id");
+		if (id == null) {
+	        response.sendRedirect("/d2/LoginServlet");
+	        return;
+	    }
+		String idstr = String.valueOf(id);
+		//String id = "1";
+		System.out.println("ID:" + idstr);
 
         // ★ DAO で reservations に INSERT
-        ReservationDAO dao = new ReservationDAO();
-        int reservationId = dao.insert(dto);
+        RequestDao dao = new RequestDao();
+        String generatedId = dao.insert(dto, idstr);
 
-        if (reservationId == -1) {
+        /*if (reservationId == -1) {
             throw new ServletException("予約データの登録に失敗しました");
-        }
+        }*/
 
         // 完了画面へ ID を渡す
-        request.setAttribute("reservationId", reservationId);
-
+        session.setAttribute("reservationId", generatedId);
+        
         // ★ 完了画面へ
-        request.getRequestDispatcher("/WEB-INF/jsp/ReservationComplete.jsp")
-               .forward(request, response);
+        response.sendRedirect("/d2/ResultCostServlet");
         return;
     }
 

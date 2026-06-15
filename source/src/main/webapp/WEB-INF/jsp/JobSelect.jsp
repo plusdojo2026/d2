@@ -1,31 +1,34 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ★ スマホ対応 -->
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;700&display=swap" rel="stylesheet">
     <title>業種選択</title>
 
-    <style>
+<style>
         body {
-            font-family: sans-serif;
+            font-family: "HGP行書体", "HGS行書体", serif;
             background-color: #f5f5f5;
             margin: 0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px; /* スマホで余白確保 */
+            padding: 15px;
         }
 
-        .container {
-            background: #fff;
-            width: 90%;              /* ★ スマホ対応 */
-            max-width: 420px;        /* PC では最大 420px */
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.15);
-        }
+.container {
+    background: rgba(255, 255, 255, 0.97); /* ← 0.8 は透明度。0 に近いほど透明 */
+    width: 90%;
+    max-width: 420px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.15);
+}
+
 
         h2 {
             text-align: center;
@@ -55,7 +58,7 @@
         }
 
         .submit-btn {
-            background-color: #ff4d4d;
+            background-color: #FF1A1A;
             color: white;
             border: none;
             padding: 14px 25px;
@@ -104,9 +107,78 @@
             font-size: 16px;
         }
     </style>
+    <style>
+    /* ▼ 通知ボタン（右上固定） */
+    .notify-btn {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        z-index: 10000;
+    }
+
+    .notify-btn img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+.notify-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ← 画像を丸いっぱいに拡大して切り取る */
+    border-radius: 50%; /* ← 丸く切り取る */
+    padding: 0; /* ← 余白を完全に削除 */
+}
+
+
+
+    /* スマホ対応（少し大きめに） */
+    @media (max-width: 480px) {
+        .notify-btn {
+            width: 48px;
+            height: 48px;
+            top: 10px;
+            right: 10px;
+        }
+    }
+</style>
+    <style>
+body {
+    background-image: url("${pageContext.request.contextPath}/img/hanagara.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.notify-under-img {
+    position: fixed;
+    top: 40px;
+    right: 3px;
+    width: 80px;
+    height: 80px;
+    object-fit: contain; /* ← 画像をそのまま表示 */
+    border-radius: 0;    /* ← 丸くしない */
+    z-index: 9999;
+}
+
+
+</style>
+    
 </head>
 
 <body>
+<!-- ▼ 通知ボタン（画像をクリックして newsServlet へ） -->
+<a href="${pageContext.request.contextPath}/NewsServlet" class="notify-btn">
+    <img src="${pageContext.request.contextPath}/img/べる.png" alt="通知">
+</a>
+
+<img src="${pageContext.request.contextPath}/img/巻物.png"
+     alt="下の画像"
+     class="notify-under-img">
+
+
     <div class="container">
         <h2>業種をご選択ください</h2>
 
@@ -130,14 +202,14 @@
                 <input type="radio" name="job" value="出張修理"> 出張修理
             </label>
 
-            <button type="submit" class="submit-btn">希望日時・オプション選択画面へ</button>
+            <button type="submit" class="submit-btn"><b>希望日時・オプション選択画面へ</b></button>
         </form>
     </div>
 
     <!-- ▼ ポップアップ -->
     <div id="alertPopup">
         <p id="alertMessage">業種を選択してください。</p>
-        <button onclick="closeAlert()">確認</button>
+        <button onclick="closeAlert()"><b>確認</b></button>
     </div>
 
 <script>

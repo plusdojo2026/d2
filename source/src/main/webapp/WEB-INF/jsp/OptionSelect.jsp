@@ -4,7 +4,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ★ スマホ対応 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>オプション選択</title>
 
     <style>
@@ -12,7 +12,10 @@
             font-family: "Arial", "Helvetica", "Yu Gothic", "Meiryo", sans-serif;
             padding: 15px;
             margin: 0;
-            background-color: #fafafa;
+            background-image: url("${pageContext.request.contextPath}/img/hanagara.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         h2 {
@@ -34,36 +37,40 @@
         .date-btn {
             min-width: 110px;
             padding: 12px;
-            background: #e0e0e0;
+            background: rgba(255,255,255,0.97);
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
             transition: 0.2s;
             font-size: 16px;
             flex-shrink: 0;
+            border: 2px solid #000; /* ★ 黒枠 */
         }
 
         .date-btn:hover { background: #d0d0d0; }
         .date-btn.active { background: #4da3ff; color: white; }
 
-        /* ▼ 時間帯エリア */
-        .time-area {
-            margin-top: 20px;
-            padding: 15px;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            display: none;
-            background: #fff;
+        /* ▼ 時間帯エリア（最初は非表示） */
+        #timeSectionBox {
+            display: none; /* ★ 余分な白ボックスを消す */
         }
+
+.time-area {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.97);
+}
+
 
         .time-option {
             display: inline-block;
             padding: 12px 18px;
             margin: 8px;
-            border: 2px solid #ccc;
+            border: 2px solid #000;
             border-radius: 8px;
             font-size: 18px;
-            background: #fafafa;
+            background: rgba(255,255,255,0.97);
             cursor: pointer;
         }
 
@@ -75,14 +82,14 @@
 
         .option-box {
             display: block;
-            border: 3px solid #999;
+            border: 3px solid #000;
             padding: 18px;
             margin: 14px auto;
             border-radius: 12px;
-            background: #ffffff;
+            background: rgba(255,255,255,0.97);
             font-size: 20px;
-            width: 90%;           /* ★ スマホ対応 */
-            max-width: 360px;     /* PC では最大幅 */
+            width: 90%;
+            max-width: 360px;
             text-align: left;
             cursor: pointer;
             transition: 0.2s;
@@ -95,20 +102,34 @@
             display: block;
             margin: 30px auto 0 auto;
             padding: 14px 30px;
-            background: #ff4d4d;
+            background: #FF1A1A;
             color: white;
             border: none;
             border-radius: 10px;
             font-size: 20px;
             cursor: pointer;
-            width: 90%;           /* ★ スマホで押しやすい */
+            width: 90%;
             max-width: 360px;
             transition: 0.2s;
         }
 
-        .confirm-btn:hover { background: #d90000; }
+        .confirm-btn:hover {
+            background: #d90000;
+        }
 
-        /* ▼ スライドダウンポップアップ（白背景） */
+        /* ▼ 白背景ボックス（共通） */
+        .section-box {
+            background: rgba(255,255,255,0.97);
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+            border: 2px solid #000;
+        }
+
+        /* ▼ ポップアップ */
         #alertPopup {
             position: fixed;
             top: -250px;
@@ -116,7 +137,7 @@
             transform: translateX(-50%);
             width: 90%;
             max-width: 400px;
-            background-color: #ffffff;
+            background: rgba(255,255,255,0.97);
             border: 1px solid #cccccc;
             padding: 20px;
             text-align: center;
@@ -126,9 +147,7 @@
             z-index: 9999;
         }
 
-        #alertPopup.show {
-            top: 30px;
-        }
+        #alertPopup.show { top: 30px; }
 
         #alertPopup button {
             margin-top: 15px;
@@ -145,39 +164,46 @@
 
 <body>
 
-<h2>日付を選択してください</h2>
-
 <form action="${pageContext.request.contextPath}/OptionSelectServlet"
       method="post"
       onsubmit="return validateOptionForm()">
 
-    <input type="hidden" name="job" value="${job}">
     <input type="hidden" name="date" id="dateInput">
     <input type="hidden" name="selectedTime" id="timeInput">
 
-    <div class="date-scroll" id="dateScroll"></div>
-
-    <div class="time-area" id="timeArea">
-        <h3 id="selectedDateTitle"></h3>
-        <div id="timeList"></div>
+    <!-- ▼ 日付選択エリア -->
+    <div class="section-box">
+        <h2>日付を選択してください</h2>
+        <div class="date-scroll" id="dateScroll"></div>
     </div>
 
-    <div class="option-area">
-        <h3>オプションを選択（複数選択できます）</h3>
+    <!-- ▼ 時間帯エリア（最初は非表示） -->
+    <div class="section-box" id="timeSectionBox">
+        <div class="time-area" id="timeArea">
+            <h3 id="selectedDateTitle"></h3>
+            <div id="timeList"></div>
+        </div>
+    </div>
 
-        <label class="option-box">
-            <input type="checkbox" name="option" value="泡ムース洗浄"> 泡ムース洗浄
-        </label>
+    <!-- ▼ オプション選択エリア -->
+    <div class="section-box">
+        <div class="option-area">
+            <h3>オプション（複数選択できます）</h3>
 
-        <label class="option-box">
-            <input type="checkbox" name="option" value="下部洗浄"> 下部洗浄
-        </label>
+            <label class="option-box">
+                <input type="checkbox" name="option1" value="泡ムース洗浄"> 泡ムース洗浄
+            </label>
 
-        <label class="option-box">
-            <input type="checkbox" name="option" value="撥水コーティング"> 撥水コーティング
-        </label>
+            <label class="option-box">
+                <input type="checkbox" name="option2" value="下部洗浄"> 下部洗浄
+            </label>
 
-        <button type="submit" class="confirm-btn">必要項目記入画面へ</button>
+            <label class="option-box">
+                <input type="checkbox" name="option3" value="撥水コーティング"> 撥水コーティング
+            </label>
+
+            <button type="submit" class="confirm-btn">必要項目記入画面へ</button>
+        </div>
     </div>
 
 </form>
@@ -199,29 +225,25 @@ const timeInput = document.getElementById("timeInput");
 const today = new Date();
 let currentSelectedDate = null;
 
-// ▼ 日付ボタン生成
 for (let i = 0; i < 7; i++) {
-    let d = new Date(today.getTime() + i * 24 * 60 * 60 * 1000);
-    let month = d.getMonth() + 1;
-    let day = d.getDate();
-    let label = month + "月" + day + "日";
+    let d = new Date(today.getTime() + i * 86400000);
+    let label = (d.getMonth() + 1) + "月" + d.getDate() + "日";
 
     let btn = document.createElement("div");
     btn.className = "date-btn";
     btn.textContent = label;
 
     btn.onclick = function () {
-
         if (currentSelectedDate === label) {
             currentSelectedDate = null;
             dateInput.value = "";
             timeArea.style.display = "none";
+            document.getElementById("timeSectionBox").style.display = "none";
             document.querySelectorAll(".date-btn").forEach(b => b.classList.remove("active"));
             return;
         }
 
         currentSelectedDate = label;
-
         document.querySelectorAll(".date-btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
 
@@ -232,8 +254,9 @@ for (let i = 0; i < 7; i++) {
     dateScroll.appendChild(btn);
 }
 
-// ▼ 時間帯生成
 function showTimeSlots(dateLabel) {
+    document.getElementById("timeSectionBox").style.display = "block"; // ★ 白ボックスごと表示
+
     selectedDateTitle.textContent = dateLabel + " の予約時間";
     timeList.innerHTML = "";
 
@@ -259,24 +282,20 @@ function showTimeSlots(dateLabel) {
     timeArea.style.display = "block";
 }
 
-// ▼ 必須チェック（ポップアップ表示）
 function validateOptionForm() {
     const date = dateInput.value.trim();
     const time = timeInput.value.trim();
 
     let message = "";
-
     if (date === "") message += "・日付\n";
     if (time === "") message += "・時間\n";
 
     if (message !== "") {
         document.getElementById("alertMessage").innerText =
             "以下の必須項目が選択されていません。\n\n" + message;
-
         showAlert();
         return false;
     }
-
     return true;
 }
 

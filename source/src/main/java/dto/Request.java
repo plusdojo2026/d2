@@ -112,6 +112,28 @@ public class Request implements Serializable {
 		this.total_amount = total_amount;
 	}
 	
+	public Request(String payment_method, int total_amount){
+		this.total_amount = total_amount;
+		this.payment_method = payment_method;
+	}
+	
+	   public Request(String category, String date, String time, String option1,
+			   String option2, String option3, String option4, String tell,
+			   String mailaddress, String address, String memo,String image) {
+		   this.category = category;
+		   this.date = date;
+		   this.time = time;
+		   this.option1 = option1;
+		   this.option2 = option2;
+		   this.option3 = option3;
+		   this.option4 = option4;
+			this.tell = tell;
+			this.mailaddress = mailaddress;
+			this.address = address;
+			this.memo = memo;
+			this.image = image;
+	   }
+	
 	
 
 	public int getId_reservation() {

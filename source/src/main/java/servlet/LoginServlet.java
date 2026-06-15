@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 			//ユーザ情報の塊からid部分を取り出す。
 			session.setAttribute("id", loginUser.getId());
 			 //成功の場合は以下に転送して値はリクエストスコープで渡しJSPでは"id"で受け取る。
-			response.sendRedirect("/d2/NewsServlet");
+			response.sendRedirect("/d2/JobSelectServlet");
 		} else { // ログイン失敗
 			// リクエストスコープに、タイトル、メッセージ、戻り先を格納する
 			request.setAttribute("result", new LoginResult("ログイン失敗！", "IDまたはPWに間違いがあります。", "/d2/LoginServlet"));

@@ -1,3 +1,15 @@
+//パスワードの表示・非表示
+function togglePassword(){
+	const pw1 = document.getElementById("password");
+    const img = document.getElementById("psimg");
+	if(pw1.type === "password"){
+		pw1.type = "text";
+		img.src = "img/eye.png"
+	}else{
+		pw1.type = "password";
+		img.src = "img/psimg.png";
+	}
+}
 //ログインが押されたら
 document.getElementById('form').onsubmit = function(event){
 	//値の取得

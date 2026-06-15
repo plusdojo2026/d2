@@ -1,1 +1,46 @@
 @charset "UTF-8";
+body{
+            margin: 0;
+    }
+    *{
+        padding: 20px;
+        line-height: 1.0;
+        margin-bottom: 12px;
+        text-align: center;
+
+    }
+    input[type="text"],input[type="password"]{
+        text-align: left;
+    }
+    
+.text {
+        width: 500px;
+        border-radius: 30px; 
+}
+.texta{
+        width: 500px;
+        border-radius: 30px;
+        margin-left: 115px;
+        
+}
+.pw-line{
+        display: flex;
+        margin-left: 275px;
+        height: 72px;
+}
+
+    
+    .btn{
+        width: 150px;
+        border-radius: 30px;
+        background-color: #ffffff;
+    }
+    
+    .psimg {
+        height: 55px;
+        margin: 0;
+        margin-top: -17px;
+       
+        
+}
+

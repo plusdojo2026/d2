@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.RequestDao;
 import dto.Request;
@@ -26,8 +27,12 @@ public class ResultServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
             try{
+            	request.setCharacterEncoding("UTF-8");
+            	response.setContentType("text/html; charset=UTF-8");
                 //URLから依頼ID取得
-				String id_reservation = request.getParameter("id_reservation");
+				//String id_reservation = request.getParameter("id_reservation");
+				HttpSession session = request.getSession();
+		    	String reservationId = (String) session.getAttribute("reservationId");
 				//テスト環境ではエラーが出るためコメントアウト
 				//int id = Integer.parseInt(id_reservation);
 				
@@ -35,10 +40,11 @@ public class ResultServlet extends HttpServlet {
 				//データ取得
 				RequestDao dao = new RequestDao();
 				//Request data = dao.findById(id_reservation);
-				Request data = dao.selectSuccess(2);
+				Request data = dao.selectSuccess(reservationId);
 
 				//失敗(データが見つからない)
 				if(data == null){
+					request.setCharacterEncoding("UTF-8");
 					request.setAttribute("errormsg","ご入力いただいたデータが見つかりません。");
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Miss.jsp");
 					dispatcher.forward(request, response);

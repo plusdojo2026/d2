@@ -5,7 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <title>通知画面</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/News.css">
 </head>
 <body>
@@ -21,15 +20,15 @@
                 <details class="news_request">
                     <summary class="news_text">
                         <span class="news_meta">
-                            <span class="list_day">${item.thisdate}</span>
+                            <span class="lhis_day">${item.thisdate}</span>
                             <span class="news_title">${item.category} 予約完了</span>
                        </span>
                     </summary>
                     <div class="accordion">
                         <c:if test="${not empty item.image}">
                             <div class="image">
-                                <img src="${pageContext.request.contextPath}/img/${item.image}" alt="予約画像">
-                            </div>
+							   <img src="${pageContext.request.contextPath}/ImageServlet?id=${item.id_reservation}" alt="画像">
+							</div>
                         </c:if>
                         <div>
                         	<p class="day">依頼実行日時:${item.date} &nbsp; ${item.time}</p><br>
@@ -75,7 +74,6 @@
 
         </c:forEach>
     </main>
-
     <script src="${pageContext.request.contextPath}/js/common.js"></script>
     <script src="${pageContext.request.contextPath}/js/News.js"></script>
 </body>

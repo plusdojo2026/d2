@@ -17,7 +17,7 @@
 
     <!-- ===== 中身：ユーザーが確認・操作する情報の本体 ===== -->
     <main>
-        <form id="paymentForm" action="ResultServlet" method="post">
+        <form id="paymentForm" action="ResultCostServlet" method="POST">
         <p>選択した業種:${dto.category} ${dto.costst}円</p>
             <p>選択したオプション:</p>
             <c:if test="${not empty dto.option1}">
@@ -47,14 +47,14 @@
 
             <!-- メッセージエリア（普段は空。エラーや案内をJSで表示する） -->
             <p id="message"></p>
-
+            <button type="button" id="cancel">キャンセル</button>
+        <input type="submit" value="確定"><br>
         </form>
     </main>
 
     <!-- ===== アクション：見終わったあとに押すボタン ===== -->
     <footer>
-        <button type="button" id="cancel">キャンセル</button>
-        <button type="button" id="decision">確定</button>
+        
     </footer>
 
     <script src="js/result_cost.js"></script>
