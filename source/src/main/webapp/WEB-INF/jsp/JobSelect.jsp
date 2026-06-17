@@ -187,19 +187,19 @@ body {
               onsubmit="return validateJobForm()">
 
             <label class="option-box">
-                <input type="radio" name="job" value="出張洗車"> 出張洗車
+                <input type="radio" name="job" value="出張洗車"> 出張洗車 5000円
             </label>
 
             <label class="option-box">
-                <input type="radio" name="job" value="出張廃品回収"> 出張廃品回収
+                <input type="radio" name="job" value="出張廃品回収"> 出張廃品回収 3000円
             </label>
 
             <label class="option-box">
-                <input type="radio" name="job" value="出張クリーニング"> 出張クリーニング
+                <input type="radio" name="job" value="出張クリーニング"> 出張クリーニング 4000円
             </label>
 
             <label class="option-box">
-                <input type="radio" name="job" value="出張修理"> 出張修理
+                <input type="radio" name="job" value="出張修理"> 出張修理 3000円
             </label>
 
             <button type="submit" class="submit-btn"><b>希望日時・オプション選択画面へ</b></button>

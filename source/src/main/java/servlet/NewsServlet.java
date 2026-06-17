@@ -13,9 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.FinishDao;
 import dao.InfoDao;
 import dao.MaintenanceDao;
 import dao.RequestDao;
+import dto.Finish;
 import dto.Info;
 import dto.Maintenance;
 import dto.Request;
@@ -41,6 +43,7 @@ public class NewsServlet extends HttpServlet {
 		//String userId = (loginUser != null) ? loginUser.getId() : "";
 
 		RequestDao requestDao = new RequestDao();
+		FinishDao finishDao = new FinishDao();
 		InfoDao infoDao = new InfoDao();
 		MaintenanceDao maintenanceDao = new MaintenanceDao();
 
@@ -48,6 +51,7 @@ public class NewsServlet extends HttpServlet {
 
 		// 取得した userId を引数に渡して絞り込む
 		allNewsList.addAll(requestDao.getNotifications(idstr));
+		allNewsList.addAll(finishDao.getNotifications(idstr));
 		allNewsList.addAll(infoDao.getNotifications());
 		allNewsList.addAll(maintenanceDao.getNotifications());
 
@@ -65,7 +69,9 @@ public class NewsServlet extends HttpServlet {
 
 			private String getDateFromModel(Object obj) {
 				if (obj instanceof Request) { 
-					return ((Request) obj).getDate(); 
+					return ((Request) obj).getThisdate(); 
+				} else if (obj instanceof Finish) { 
+					return ((Finish) obj).getDate_finish();
 				} else if (obj instanceof Info) { 
 					return ((Info) obj).getDate_info();
 				} else if (obj instanceof Maintenance) { 

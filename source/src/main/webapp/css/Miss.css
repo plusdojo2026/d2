@@ -1,1 +1,90 @@
 @charset "UTF-8";
+/* =======================
+   Miss.css — 予約失敗画面
+   =======================*/
+
+/* ---------- トークン ---------- */
+:root {
+  --color-bg:           #22202a;
+  --color-card:         rgba(255, 255, 255, 0.97);
+  --color-card-text:    #333333;
+  --color-on-primary:   #ffffff;
+  --color-line:         #cccccc;
+  --color-line-hover:   #f0f0f0;
+  --color-primary:      #ff1a1a;
+  --color-primary-dark: #d90000;
+  --color-shadow:       rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- リセット ---------- */
+* {
+  box-sizing: border-box;
+}
+
+/* ---------- 土台---------- */
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 15px;
+  background-color: var(--color-bg);
+  background-image: url("../img/hanagara.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-card-text);
+}
+
+/* ---------- カード ---------- */
+main {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 30px;
+  background: var(--color-card);
+  color: var(--color-card-text);
+  border-radius: 12px;
+  box-shadow: 0 0 15px var(--color-shadow);
+  text-align: center;
+}
+
+main p {
+  margin: 12px 0;
+}
+
+/* ---------- 失敗メッセージ---------- */
+.headline {
+  margin: 0 0 8px;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: "HGP行書体", "HGS行書体", serif;
+}
+
+/* ---------- エラー内容を強調 ---------- */
+.errormsg {
+  margin: 0 0 20px;
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+/* ---------- ホーム画面へ戻る  ---------- */
+.btn {
+  width: 100%;
+  margin-top: 24px;
+  padding: 14px 25px;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: inherit;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background-color: var(--color-primary-dark);
+}

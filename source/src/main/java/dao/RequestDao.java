@@ -32,7 +32,7 @@ public class RequestDao {
 					"root", "password");
 
 			// SQL文を準備する(要修正)
-			String sql = "SELECT thisdate, date, category, time, option1, option2, option3, "
+			String sql = "SELECT id_chara, thisdate, date, category, time, option1, option2, option3, "
 					+ "option4, total_amount, payment_method FROM Request "
 					+ "WHERE id_reservation = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
@@ -46,6 +46,7 @@ public class RequestDao {
 			// 結果表をコレクションにコピーする
 			if(rs.next()) {
 				result = new Request();
+				result.setId_chara(rs.getInt("id_chara"));
 				result.setThisdate(rs.getString("thisdate")); 
 				result.setDate(rs.getString("date"));
 				result.setTime(rs.getString("time"));
@@ -272,8 +273,16 @@ public class RequestDao {
 				conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
 				// SQLに WHERE 句を追加
-				String sql = "SELECT thisdate, date, category, option1, option2, option3, "
-						+ "option4, total_amount, payment_method FROM request WHERE id_chara = ?";
+				String sql = "SELECT r.thisdate, r.date, r.time, r.address, r.category, "
+						+ "r.category, cst.optionCost AS CostSt, r.option1, c1.optionCost AS Cost1, r.option2, c2.optionCost AS Cost2, "
+						+ "r.option3, c3.optionCost AS Cost3, r.option4, c4.optionCost AS Cost4, "
+						+ "r.total_amount, r.payment_method, r.image FROM Request r " 
+						+ "LEFT JOIN Cost cst ON r.category = cst.optionNAME "
+						+ "LEFT JOIN Cost c1 ON r.option1 = c1.optionNAME "
+						+ "LEFT JOIN Cost c2 ON r.option2 = c2.optionNAME "
+						+ "LEFT JOIN Cost c3 ON r.option3 = c3.optionNAME "
+						+ "LEFT JOIN Cost c4 ON r.option4 = c4.optionNAME "
+						+"WHERE id_chara = ? AND success = 1";
 				
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 				
@@ -284,15 +293,23 @@ public class RequestDao {
 
 				while (rs.next()) {
 					Request reque = new Request(
-							rs.getString("thisdate"), 
-							rs.getString("date"),
-							rs.getString("category"),
-							rs.getString("option1"),
-							rs.getString("option2"),
-							rs.getString("option3"),
-							rs.getString("option4"),
-							rs.getInt("total_amount"),
-							rs.getString("payment_method")
+							rs.getString("r.thisdate"), 
+							rs.getString("r.date"),
+							rs.getString("r.time"),
+							rs.getString("r.address"), 
+							rs.getString("r.category"),
+							rs.getString("r.option1"),
+							rs.getString("r.option2"),
+							rs.getString("r.option3"),
+							rs.getString("r.option4"),
+							rs.getInt("CostSt"),
+							rs.getInt("cost1"),
+							rs.getInt("cost2"),
+							rs.getInt("cost3"),
+							rs.getInt("cost4"),
+							rs.getInt("r.total_amount"),
+							rs.getString("r.payment_method"),
+							rs.getString("r.image")
 							);
 					reqList.add(reque);
 				}
@@ -326,7 +343,6 @@ public class RequestDao {
 		
 	public String insert(Request req, String userId) {
 		Connection conn = null;
-		boolean regist = false;
 		String result = null;
 
 		try {
@@ -359,13 +375,16 @@ public class RequestDao {
 	        pStmt.setString(13, req.getImage() != null ? req.getImage() : "");
 	        
 	        LocalDate today = LocalDate.now();
-	        pStmt.setString(14, today.toString());
+	        int year = today.getYear();
+	        int month = today.getMonthValue();
+	        int day = today.getDayOfMonth();
+	        
+	        pStmt.setString(14, year + "年" + month + "月" + day + "日");
 			
 			System.out.println(pStmt);
 			
 			// SQL文を実行する
 			if (pStmt.executeUpdate() == 1 ) {
-				regist = true;
 				ResultSet rs = pStmt.getGeneratedKeys();
 	            if (rs.next()) {
 	                result = String.valueOf(rs.getLong(1));
@@ -389,4 +408,60 @@ public class RequestDao {
 		// 結果を返す
 		return result;
 	}
+	
+	//予約されてる時間の取得
+	public List<Request> selectDate(String category) {
+		Connection conn = null;
+		List<Request> reqList = new ArrayList<Request>();
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+
+			// SQLに WHERE 句を追加
+			String sql = "SELECT date, time FROM request WHERE category = ? AND success = 1";
+			
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			
+			// プレースホルダーに値をセット
+			pStmt.setString(1, category);
+
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				Request reque = new Request( 
+						rs.getString("date"),
+						rs.getString("time")
+						);
+				reqList.add(reque);
+			}
+			
+			// デバッグコード
+			System.out.println("===== reqList Debug =====");
+			System.out.println("Size: " + reqList.size());
+			for (Request req : reqList) {
+			    System.out.println(req);
+			}
+			System.out.println("========================");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			reqList = null;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			reqList = null;
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					reqList = null;
+				}
+			}
+		}
+
+		return reqList;
+	}
+	
+	
 }

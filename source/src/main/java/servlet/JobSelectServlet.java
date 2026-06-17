@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dao.RequestDao;
+
 @WebServlet("/JobSelectServlet")
 public class JobSelectServlet extends HttpServlet {
 
@@ -33,28 +35,30 @@ public class JobSelectServlet extends HttpServlet {
 
         // ★ 業種ごとに遷移先を変更
         String nextPage;
-
+        RequestDao rdao = new RequestDao();
         switch (job) {
-
+        
             case "出張洗車":
-                // ★ 現在の OptionSelect.jsp は「洗車専用」
+        		request.setAttribute("dto", rdao.selectDate("出張洗車"));
                 nextPage = "/WEB-INF/jsp/OptionSelect.jsp";
                 break;
 
             case "出張廃品回収":
+            	request.setAttribute("dto", rdao.selectDate("出張廃品回収"));
                 nextPage = "/WEB-INF/jsp/RecycleOptionSelect.jsp";
                 break;
 
             case "出張クリーニング":
+            	request.setAttribute("dto", rdao.selectDate("出張クリーニング"));
                 nextPage = "/WEB-INF/jsp/CleaningOptionSelect.jsp";
                 break;
 
             case "出張修理":
+            	request.setAttribute("dto", rdao.selectDate("出張修理"));
                 nextPage = "/WEB-INF/jsp/RepairOptionSelect.jsp";
                 break;
 
             default:
-                // 万が一 job が null の場合は洗車ページへ
                 nextPage = "/WEB-INF/jsp/OptionSelect.jsp";
                 break;
         }

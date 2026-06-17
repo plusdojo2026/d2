@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -46,9 +46,8 @@
             flex-shrink: 0;
             border: 2px solid #000; /* ★ 黒枠 */
         }
-
-        .date-btn:hover { background: #d0d0d0; }
-        .date-btn.active { background: #4da3ff; color: white; }
+        .date-btn:hover { background: #D0D0D0; }
+        .date-btn.active { background: #4DA3FF; color: white; }
 
         /* ▼ 時間帯エリア（最初は非表示） */
         #timeSectionBox {
@@ -192,15 +191,15 @@
             <h3>オプション（複数選択できます）</h3>
 
             <label class="option-box">
-                <input type="checkbox" name="option1" value="泡ムース洗浄"> 泡ムース洗浄
+                <input type="checkbox" name="option1" value="泡ムース洗浄"> 泡ムース洗浄 3000円
             </label>
 
             <label class="option-box">
-                <input type="checkbox" name="option2" value="下部洗浄"> 下部洗浄
+                <input type="checkbox" name="option2" value="下部洗浄"> 下部洗浄 3000円
             </label>
 
             <label class="option-box">
-                <input type="checkbox" name="option3" value="撥水コーティング"> 撥水コーティング
+                <input type="checkbox" name="option3" value="撥水コーティング"> 撥水コーティング 4000円
             </label>
 
             <button type="submit" class="confirm-btn">必要項目記入画面へ</button>
@@ -225,6 +224,14 @@ const timeInput = document.getElementById("timeInput");
 
 const today = new Date();
 let currentSelectedDate = null;
+let reservedList = [];
+
+<c:forEach var="item" items="${dto}">
+reservedList.push({
+    date: "${item.date}",
+    time: "${item.time}"
+});
+</c:forEach>
 
 for (let i = 0; i < 7; i++) {
     let d = new Date(today.getTime() + i * 86400000);
@@ -248,21 +255,26 @@ for (let i = 0; i < 7; i++) {
         document.querySelectorAll(".date-btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
 
-        dateInput.value = label;
-        showTimeSlots(label);
+        dateInput.value = (d.getYear()+1900) + "年" + label;
+        showTimeSlots(dateInput.value);
     };
 
     dateScroll.appendChild(btn);
 }
 
+
 function showTimeSlots(dateLabel) {
     document.getElementById("timeSectionBox").style.display = "block"; // ★ 白ボックスごと表示
 
-    selectedDateTitle.textContent = dateLabel + " の予約時間";
     timeList.innerHTML = "";
 
     for (let hour = 8; hour <= 20; hour += 2) {
-        let timeText = hour + ":00 〜 " + (hour + 2) + ":00";
+    		let timeText = hour + ":00 〜 " + (hour + 2) + ":00";
+    		let isReserved = reservedList.some(r =>
+            r.date === dateLabel && r.time === timeText
+        );
+
+        if (isReserved) continue;
 
         let div = document.createElement("div");
         div.className = "time-option";

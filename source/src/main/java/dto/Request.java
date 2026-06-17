@@ -75,7 +75,7 @@ public class Request implements Serializable {
 		this.total_amount = total_amount;
 	}
 	
-	//予約成功、通知用
+	//予約成功
 	public Request(String thisdate, String date, String category, String option1, String option2,
 			String option3, String option4, int total_amount, String payment_method) {
 		this.thisdate = thisdate;
@@ -111,11 +111,40 @@ public class Request implements Serializable {
 		this.cost4 = cost4;
 		this.total_amount = total_amount;
 	}
-	
+	//update用
 	public Request(String payment_method, int total_amount){
 		this.total_amount = total_amount;
 		this.payment_method = payment_method;
 	}
+	
+	//日付用
+	public Request(String date, String time) {
+		this.date = date;
+		this.time = time;
+	}
+	
+	//追加用
+	public Request(String thisdate, String date, String time, String address, String category, String option1, String option2,
+			String option3, String option4, int costst, int cost1, int cost2, int cost3, int cost4, int total_amount, String payment_method, String img) {
+		this.thisdate = thisdate;
+		this.date = date;
+		this.time = time;
+		this.address = address;
+		this.category = category;
+		this.option1 = option1;
+		this.option2 = option2;
+		this.option3 = option3;
+		this.option4 = option4;
+		this.costst = costst;
+		this.cost1 = cost1;
+		this.cost2 = cost2;
+		this.cost3 = cost3;
+		this.cost4 = cost4;
+		this.total_amount = total_amount;
+		this.payment_method = payment_method;
+		this.image = img;
+	}
+	
 	
 	   public Request(String category, String date, String time, String option1,
 			   String option2, String option3, String option4, String tell,
@@ -318,6 +347,7 @@ public class Request implements Serializable {
         return "Request{" +
                 "thisdate='" + thisdate + '\'' +
                 ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
                 ", category='" + category + '\'' +
                 ", option1='" + option1 + '\'' +
                 ", option2='" + option2 + '\'' +
