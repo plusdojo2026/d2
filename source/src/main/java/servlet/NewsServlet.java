@@ -56,29 +56,55 @@ public class NewsServlet extends HttpServlet {
 		allNewsList.addAll(maintenanceDao.getNotifications());
 
 		Collections.sort(allNewsList, new Comparator<Object>() {
-			@Override
-			public int compare(Object o1, Object o2) {
-				String date1 = getDateFromModel(o1);
-				String date2 = getDateFromModel(o2);
-				
-				if (date1 == null || date2 == null) {
-					return 0;
-				}
-				return date2.compareTo(date1);
-			}
+		    @Override
+		    public int compare(Object o1, Object o2) {
+		        String date1 = getDateFromModel(o1);
+		        String date2 = getDateFromModel(o2);
+		        
+		        if (date1 == null || date2 == null) {
+		            return 0;
+		        }
+		        
+		        //日付でソート
+		        int dateCompare = date2.compareTo(date1);
+		        if (dateCompare != 0) {
+		            return dateCompare;
+		        }
+		        
+		        //日付が同じ場合、オブジェクトの種類でソート
+		        int p1 = getPriority(o1);
+		        int p2 = getPriority(o2);
+		        
+		      
+		        return Integer.compare(p1, p2);
+		    }
 
-			private String getDateFromModel(Object obj) {
-				if (obj instanceof Request) { 
-					return ((Request) obj).getThisdate(); 
-				} else if (obj instanceof Finish) { 
-					return ((Finish) obj).getDate_finish();
-				} else if (obj instanceof Info) { 
-					return ((Info) obj).getDate_info();
-				} else if (obj instanceof Maintenance) { 
-					return ((Maintenance) obj).getDate_maintenance();
-				}
-				return "";
-			}
+		    // 同一日の場合の優先度を設定する
+		    private int getPriority(Object obj) {
+		        if (obj instanceof Finish) {
+		            return 1; 
+		        } else if (obj instanceof Request) {
+		            return 2; 
+		        } else if (obj instanceof Info) {
+		            return 3;
+		        } else if (obj instanceof Maintenance) {
+		            return 4;
+		        }
+		        return 99; 
+		    }
+
+		    private String getDateFromModel(Object obj) {
+		        if (obj instanceof Request) { 
+		            return ((Request) obj).getThisdate(); 
+		        } else if (obj instanceof Finish) { 
+		            return ((Finish) obj).getDate_finish();
+		        } else if (obj instanceof Info) { 
+		            return ((Info) obj).getDate_info();
+		        } else if (obj instanceof Maintenance) { 
+		            return ((Maintenance) obj).getDate_maintenance();
+		        }
+		        return "";
+		    }
 		});
 		
 		request.setAttribute("notifications", allNewsList);
