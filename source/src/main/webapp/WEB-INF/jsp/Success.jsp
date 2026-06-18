@@ -36,7 +36,12 @@
         </c:if>
 
         <p class="total">合計金額:${result.total_amount}円</p>
-        <p>お支払方法:${result.payment_method}</p>
+        <p>お支払方法:
+        <c:choose>
+        <c:when test="${result.payment_method == 'credit'}">クレジットカード</c:when>
+        <c:when test="${result.payment_method == 'paypay'}">PayPay</c:when>
+        <c:otherwise>${result.payment_method}</c:otherwise>
+    	</c:choose>
      <button class="btn"><a href="${pageContext.request.contextPath}/JobSelectServlet">ホーム画面へ戻る</a></button>
     </main>
     <footer>

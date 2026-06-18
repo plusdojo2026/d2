@@ -174,7 +174,7 @@ body {
     <img src="${pageContext.request.contextPath}/img/べる.png" alt="通知">
 </a>
 
-<img src="${pageContext.request.contextPath}/img/巻物.png"
+<img src="${pageContext.request.contextPath}/img/巻物3.png"
      alt="下の画像"
      class="notify-under-img">
 

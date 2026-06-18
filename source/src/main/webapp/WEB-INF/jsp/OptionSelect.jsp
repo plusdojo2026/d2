@@ -96,26 +96,6 @@
 
         .option-box:hover { background: #f0f0f0; }
 
-        /* ▼ 次へボタン */
-        .confirm-btn {
-            display: block;
-            margin: 30px auto 0 auto;
-            padding: 14px 30px;
-            background: #FF1A1A;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 20px;
-            cursor: pointer;
-            width: 90%;
-            max-width: 360px;
-            transition: 0.2s;
-        }
-
-        .confirm-btn:hover {
-            background: #d90000;
-        }
-
         /* ▼ 白背景ボックス（共通） */
         .section-box {
             background: rgba(255,255,255,0.97);
@@ -158,6 +138,35 @@
             border-radius: 5px;
             font-size: 16px;
         }
+        .OptionSelect-button-area {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .confirm-btn {
+            background-color: #FF1A1A;
+            color: #ffffff;
+            border: 1px solid #800010;
+        }
+        .OptionSelect-btn-cancel {
+        background-color: #e0f4ff;
+        border: 1px solid #a0c8e0;
+        }
+        .OptionSelect-btn-cancel,
+        .confirm-btn {
+            flex: 1;
+            padding: 14px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .confirm-btn:hover {
+            background: #d90000;
+        }
+
     </style>
 </head>
 
@@ -201,10 +210,14 @@
             <label class="option-box">
                 <input type="checkbox" name="option3" value="撥水コーティング"> 撥水コーティング 4000円
             </label>
-
-            <button type="submit" class="confirm-btn">必要項目記入画面へ</button>
-        </div>
-    </div>
+            
+<div class="OptionSelect-button-area">
+    <button type="button" class="OptionSelect-btn-cancel" onclick="history.back()">戻る</button>
+    <button type="submit" class="confirm-btn">次の画面へ</button>
+            
+</div>
+</div>
+</div>
 
 </form>
 

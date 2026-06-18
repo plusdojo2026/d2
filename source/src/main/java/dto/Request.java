@@ -124,8 +124,9 @@ public class Request implements Serializable {
 	}
 	
 	//追加用
-	public Request(String thisdate, String date, String time, String address, String category, String option1, String option2,
+	public Request(int id_reservation, String thisdate, String date, String time, String address, String category, String option1, String option2,
 			String option3, String option4, int costst, int cost1, int cost2, int cost3, int cost4, int total_amount, String payment_method, String img) {
+		this.id_reservation = id_reservation;
 		this.thisdate = thisdate;
 		this.date = date;
 		this.time = time;

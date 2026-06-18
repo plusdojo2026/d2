@@ -189,10 +189,10 @@
 
         <!-- ボタンエリア -->
         <div class="mustInfo-button-area">
-<button type="button" class="mustInfo-btn-cancel"
-        onclick="location.href='OptionSelectServlet?back=true'">
-    戻る
-</button>
+		<button type="button" class="mustInfo-btn-cancel"
+			onclick="history.back()">
+			戻る
+		</button>
 
             <button type="submit" class="mustInfo-btn-confirm" onclick="return validateForm()">
                 予約確定

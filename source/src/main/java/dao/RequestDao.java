@@ -273,7 +273,7 @@ public class RequestDao {
 				conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
 				// SQLに WHERE 句を追加
-				String sql = "SELECT r.thisdate, r.date, r.time, r.address, r.category, "
+				String sql = "SELECT r.id_reservation,r.thisdate, r.date, r.time, r.address, r.category, "
 						+ "r.category, cst.optionCost AS CostSt, r.option1, c1.optionCost AS Cost1, r.option2, c2.optionCost AS Cost2, "
 						+ "r.option3, c3.optionCost AS Cost3, r.option4, c4.optionCost AS Cost4, "
 						+ "r.total_amount, r.payment_method, r.image FROM Request r " 
@@ -293,6 +293,7 @@ public class RequestDao {
 
 				while (rs.next()) {
 					Request reque = new Request(
+							rs.getInt("r.id_reservation"), 
 							rs.getString("r.thisdate"), 
 							rs.getString("r.date"),
 							rs.getString("r.time"),
