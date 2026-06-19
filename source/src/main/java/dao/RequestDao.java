@@ -14,8 +14,8 @@ import dto.Request;
 
 public class RequestDao {
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/d2";
-    private static final String DB_USER = "root";
-    private static final String DB_PASS = "password";
+    private static final String DB_USER = "d2";
+    private static final String DB_PASS = "YVw2aAvYdfh4Kdmp";
 	// 引数req指定された項目で検索して、取得されたデータのリストを返す
 	//予約成功
 	public Request selectSuccess(String id) {
@@ -27,9 +27,7 @@ public class RequestDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d2?"
-					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-					"root", "password");
+			conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
 			// SQL文を準備する(要修正)
 			String sql = "SELECT id_chara, thisdate, date, category, time, option1, option2, option3, "
@@ -150,18 +148,16 @@ public class RequestDao {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 
 				// データベースに接続する
-				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d2?"
-						+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-						"root", "password");
+				conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
 				// SQL文を準備する(要修正)
 				String sql = "SELECT r.category, cst.optionCost AS CostSt, r.option1, c1.optionCost AS Cost1, r.option2, c2.optionCost AS Cost2, "
 						+ "r.option3, c3.optionCost AS Cost3, r.option4, c4.optionCost AS Cost4 FROM Request r "
-						+ "LEFT JOIN Cost cst ON r.category = cst.optionNAME "
-						+ "LEFT JOIN Cost c1 ON r.option1 = c1.optionNAME "
-						+ "LEFT JOIN Cost c2 ON r.option2 = c2.optionNAME "
-						+ "LEFT JOIN Cost c3 ON r.option3 = c3.optionNAME "
-						+ "LEFT JOIN Cost c4 ON r.option4 = c4.optionNAME "
+						+ "LEFT JOIN cost cst ON r.category = cst.optionNAME "
+						+ "LEFT JOIN cost c1 ON r.option1 = c1.optionNAME "
+						+ "LEFT JOIN cost c2 ON r.option2 = c2.optionNAME "
+						+ "LEFT JOIN cost c3 ON r.option3 = c3.optionNAME "
+						+ "LEFT JOIN cost c4 ON r.option4 = c4.optionNAME "
 						+ "WHERE id_reservation = ?";
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 				System.out.println("option:"+id);
@@ -225,9 +221,7 @@ public class RequestDao {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 
 				// データベースに接続する
-				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d2?"
-						+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-						"root", "password");
+				conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
 				// SQL文を準備する
 				String sql = "UPDATE Request SET payment_method=?, total_amount=?, success=true WHERE id_reservation=?";
@@ -277,11 +271,11 @@ public class RequestDao {
 						+ "r.category, cst.optionCost AS CostSt, r.option1, c1.optionCost AS Cost1, r.option2, c2.optionCost AS Cost2, "
 						+ "r.option3, c3.optionCost AS Cost3, r.option4, c4.optionCost AS Cost4, "
 						+ "r.total_amount, r.payment_method, r.image FROM Request r " 
-						+ "LEFT JOIN Cost cst ON r.category = cst.optionNAME "
-						+ "LEFT JOIN Cost c1 ON r.option1 = c1.optionNAME "
-						+ "LEFT JOIN Cost c2 ON r.option2 = c2.optionNAME "
-						+ "LEFT JOIN Cost c3 ON r.option3 = c3.optionNAME "
-						+ "LEFT JOIN Cost c4 ON r.option4 = c4.optionNAME "
+						+ "LEFT JOIN cost cst ON r.category = cst.optionNAME "
+						+ "LEFT JOIN cost c1 ON r.option1 = c1.optionNAME "
+						+ "LEFT JOIN cost c2 ON r.option2 = c2.optionNAME "
+						+ "LEFT JOIN cost c3 ON r.option3 = c3.optionNAME "
+						+ "LEFT JOIN cost c4 ON r.option4 = c4.optionNAME "
 						+"WHERE id_chara = ? AND success = 1";
 				
 				PreparedStatement pStmt = conn.prepareStatement(sql);
@@ -351,9 +345,7 @@ public class RequestDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d2?"
-					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-					"root", "password");
+			conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
 			// SQL文を準備する
 			String sql = "INSERT INTO Request (id_reservation, id_chara, category, date, time, option1, option2, option3, option4, tell, mailaddress, address, memo, image, thisdate) " +
@@ -420,7 +412,7 @@ public class RequestDao {
 			conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
 			// SQLに WHERE 句を追加
-			String sql = "SELECT date, time FROM request WHERE category = ? AND success = 1";
+			String sql = "SELECT date, time FROM Request WHERE category = ? AND success = 1";
 			
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			

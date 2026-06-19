@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import dto.IdPw;
 
 public class IdPwDao {
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/d2";
+    private static final String DB_USER = "d2";
+    private static final String DB_PASS = "YVw2aAvYdfh4Kdmp";
 	// 引数で指定されたidpwでログイン成功ならtrueを返す
 		// isLoginOkは廃止。idを返す目的に変更
 		public IdPw getLoginUser(IdPw idpw) {
@@ -18,10 +21,7 @@ public class IdPwDao {
 
 		    try {
 		        Class.forName("com.mysql.cj.jdbc.Driver");
-		        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d2?"
-		                + "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9"
-		                + "&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true",
-		                "root", "password");
+		        conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
 		        String sql = "SELECT id, user_id, password FROM IdPw WHERE user_id=? AND password=?";
 		        PreparedStatement pStmt = conn.prepareStatement(sql);
@@ -109,12 +109,10 @@ public class IdPwDao {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// データベースに接続する
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/d2?"
-					+ "characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true",
-					"root", "password");
+			conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
 			// SQL文を準備する
-			String sql = "INSERT INTO idpw VALUES (0, ?, ?)";
+			String sql = "INSERT INTO IdPw VALUES (0, ?, ?)";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 
 			// SQL文を完成させる

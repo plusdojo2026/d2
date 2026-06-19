@@ -12,8 +12,8 @@ import dto.Finish;
 
 public class FinishDao {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/d2";
-    private static final String DB_USER = "root";
-    private static final String DB_PASS = "password";
+    private static final String DB_USER = "d2";
+    private static final String DB_PASS = "YVw2aAvYdfh4Kdmp";
 
     public void insert(Finish dto){
 

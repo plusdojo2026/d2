@@ -12,7 +12,7 @@ public class ReservationDAO {
 
     private static final String URL = "jdbc:mysql://localhost:3306/test_db?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Tokyo";
     private static final String USER = "root";
-    private static final String PASSWORD = "passwprd";
+    private static final String PASSWORD = "YVw2aAvYdfh4Kdmp";
 
     private static final String INSERT_SQL =
         "INSERT INTO reservations (job, date, time, options_text, phone, email, destination, note, image_file) " +
