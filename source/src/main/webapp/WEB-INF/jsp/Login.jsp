@@ -155,6 +155,7 @@ body {
 
 <body>
 
+
 <header>
     <img src="${pageContext.request.contextPath}/img/logo.png" alt="しの結び" class="logo">
 </header>
@@ -184,6 +185,7 @@ function togglePassword() {
     pw.type = pw.type === "password" ? "text" : "password";
 }
 </script>
+
 
 </body>
 </html>
