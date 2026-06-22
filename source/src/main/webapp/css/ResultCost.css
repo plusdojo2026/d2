@@ -27,11 +27,11 @@ body {
   min-height: 100vh;
   padding: 15px;
   background-color: var(--color-bg);
-  background-image: url("../img/hanagara.png");
+  background-image: url("../img/hanagara2.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  font-family: "HGP行書体", "HGS行書体", serif;
+  font-family: "KouzanBrush", serif;
   font-size: 16px;
   line-height: 1.6;
   color: var(--color-card-text);

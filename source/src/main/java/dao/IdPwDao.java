@@ -10,7 +10,7 @@ import dto.IdPw;
 
 public class IdPwDao {
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/d2";
-    private static final String DB_USER = "d2";
+	private static final String DB_USER = "d2";
     private static final String DB_PASS = "YVw2aAvYdfh4Kdmp";
 	// 引数で指定されたidpwでログイン成功ならtrueを返す
 		// isLoginOkは廃止。idを返す目的に変更

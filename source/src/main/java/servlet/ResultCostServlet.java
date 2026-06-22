@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +26,7 @@ public class ResultCostServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+    	try {
         // ----- 1. 前の画面から、対象の依頼を識別する値を受け取る -----
         //String requestId = request.getParameter("id_reservation");
     	HttpSession session = request.getSession();
@@ -47,6 +48,12 @@ public class ResultCostServlet extends HttpServlet {
         // ----- 4. 料金精算画面（JSP）へ転送して表示 -----
         request.getRequestDispatcher("/WEB-INF/jsp/ResultCost.jsp")
                .forward(request, response);
+    
+    }catch(Exception e){
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Error.jsp");
+			dispatcher.forward(request, response);
+			return;
+    }
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -25,8 +25,9 @@ public class Finish implements Serializable{
     	this.category = category;
     }
     //通知用
-    public Finish(String date_finish, String category) {
+    public Finish(String date_finish, String time_finish, String category) {
     	this.date_finish = date_finish;
+    	this.time_finish = time_finish;
     	this.category = category;
     }
 

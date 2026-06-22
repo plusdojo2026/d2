@@ -6,12 +6,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;700&display=swap" rel="stylesheet">
 <title>登録結果</title>
 <style>
 /* ▼ 背景（花柄） */
+@font-face {
+  font-family: "KouzanBrush";
+  src: url("/d2/fonts/Satuki.woff2") format("woff2"),
+  font-display: swap;
+}
 body {
+	font-family: "KouzanBrush", serif;
     margin: 0;
-    font-family: "HGP行書体", "HGS行書体", serif;
     background-image: url("${pageContext.request.contextPath}/img/haikei.png");
     background-size: cover;
     background-position: center;

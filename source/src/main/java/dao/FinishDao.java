@@ -39,7 +39,7 @@ public class FinishDao {
 		try {conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
 			// SQLに WHERE 句を追加
-			String sql = "SELECT date_finish, category FROM finish WHERE id_chara = ?";
+			String sql = "SELECT date_finish, time_finish, category FROM finish WHERE id_chara = ?";
 			
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			
@@ -50,7 +50,8 @@ public class FinishDao {
 
 			while (rs.next()) {
 				Finish fin = new Finish(
-						rs.getString("date_finish"), 
+						rs.getString("date_finish"),
+						rs.getString("time_finish"),
 						rs.getString("category")
 						);
 				finList.add(fin);

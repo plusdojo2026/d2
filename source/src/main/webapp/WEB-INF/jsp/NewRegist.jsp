@@ -5,13 +5,20 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;700&display=swap" rel="stylesheet">
 <title>サインアップ</title>
 
 <style>
 /* ▼ 背景（花柄） */
+@font-face {
+  font-family: "KouzanBrush";
+  src: url("/d2/fonts/Satuki.woff2") format("woff2"),
+  font-display: swap;
+}
 body {
-    margin: 0;
-    font-family: "HGP行書体", "HGS行書体", serif;
+	margin: 0;
+	font-family: "KouzanBrush", serif;
+    
     background-image: url("${pageContext.request.contextPath}/img/haikei.png");
     background-size: cover;
     background-position: center;
@@ -135,7 +142,7 @@ main {
     </form>
 
     <form method="GET" action="/d2/LoginServlet">
-        <input type="submit" value="ログインページへ戻る" class="btn">
+        <input type="submit" value="ログインページへ" class="btn">
     </form>
 </main>
 

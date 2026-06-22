@@ -21,6 +21,7 @@
   box-sizing: border-box;
 }
 
+
 /* ---------- 土台---------- */
 body {
   margin: 0;
@@ -59,7 +60,7 @@ main p {
   margin: 0 0 8px;
   font-size: 22px;
   font-weight: bold;
-  font-family: "HGP行書体", "HGS行書体", serif;
+  font-family: "KouzanBrush", serif;
 }
 
 /* ---------- エラー内容を強調 ---------- */

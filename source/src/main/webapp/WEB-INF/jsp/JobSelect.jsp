@@ -9,15 +9,20 @@
     <title>業種選択</title>
 
 <style>
+@font-face {
+  font-family: "KouzanBrush";
+  src: url("/d2/fonts/Satuki.woff2") format("woff2"),
+  font-display: swap;
+}
         body {
-            font-family: "HGP行書体", "HGS行書体", serif;
+            font-family: "KouzanBrush", serif;
             background-color: #f5f5f5;
             margin: 0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px;
+            padding: 15px;    
         }
 
 .container {
@@ -146,10 +151,10 @@
 </style>
     <style>
 body {
-    background-image: url("${pageContext.request.contextPath}/img/hanagara.png");
-    background-size: cover;
+    background-image: url("${pageContext.request.contextPath}/img/hanagara2.png");
+    background-size: auto;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
 }
 
 .notify-under-img {

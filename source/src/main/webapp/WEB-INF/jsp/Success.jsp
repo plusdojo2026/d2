@@ -1,14 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;700&display=swap" rel="stylesheet">
     <title>予約成功</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Success.css">
+    <style>@font-face {
+  font-family: "KouzanBrush";
+  src: url("/d2/fonts/Satuki.woff2") format("woff2"),
+  font-display: swap;
+}</style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Success.css?v=2">
 </head>
 <body>
     <main>
@@ -37,17 +41,14 @@
 
         <p class="total">合計金額:${result.total_amount}円</p>
         <p>お支払方法:
-        <c:choose>
+    	<c:choose>
         <c:when test="${result.payment_method == 'credit'}">クレジットカード</c:when>
         <c:when test="${result.payment_method == 'paypay'}">PayPay</c:when>
         <c:otherwise>${result.payment_method}</c:otherwise>
     	</c:choose>
-     <button class="btn"><a href="${pageContext.request.contextPath}/JobSelectServlet">ホーム画面へ戻る</a></button>
+		</p>
+
+        <button class="btn"><a href="${pageContext.request.contextPath}/JobSelectServlet">ホーム画面へ戻る</a></button>
     </main>
-    <footer>
-
-    </footer>
-
-
 </body>
 </html>

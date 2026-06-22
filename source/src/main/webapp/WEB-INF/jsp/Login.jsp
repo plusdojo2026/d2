@@ -4,13 +4,19 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;700&display=swap" rel="stylesheet">
 <title>ログイン</title>
 
 <style>
 /* ▼ 背景（花柄） */
+@font-face {
+  font-family: "KouzanBrush";
+  src: url("/d2/fonts/Satuki.woff2") format("woff2"),
+  font-display: swap;
+}
 body {
+	font-family: "KouzanBrush", serif;
     margin: 0;
-    font-family: "HGP行書体", "HGS行書体", serif;
     background-image: url("${pageContext.request.contextPath}/img/haikei.png");
     background-size: cover;
     background-position: center;
@@ -68,8 +74,8 @@ main {
 /* ▼ ボタン（ログイン / 新規登録） */
 .btn {
     width: 60%;
-    height: 100px;
-    padding: 20px;
+    height: 40%;
+    padding: 3%;
     font-size: 60px;
     margin-top: 30px;
 
@@ -104,11 +110,10 @@ main {
 /* ▼ スマホ調整 */
 @media (max-width: 480px) {
     main {
-        padding: 35px;  /* ← スマホでも広め */
+        padding: 6%;  /* ← スマホでも広め */
     }
     .btn {
-        font-size: 40px;
-        padding: 16px;
+        font-size: 300%;
     }
 .text, .texta {
     width: 100%;
@@ -117,7 +122,7 @@ main {
     font-size: 70px;
     height: 100px;        /* ← 高さを大きく */
     line-height: 150px;   /* ← テキスト位置を中央に */
-    border-radius: 10px;
+    border-radius: 4%;
     border: 1px solid #ccc;
     box-sizing: border-box;
 }

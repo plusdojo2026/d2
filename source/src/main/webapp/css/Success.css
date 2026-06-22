@@ -28,7 +28,7 @@ body {
   min-height: 100vh;
   padding: 15px;
   background-color: var(--color-bg);
-  background-image: url("../img/hanagara.png");
+  background-image: url("../img/hanagara2.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -61,7 +61,7 @@ main p {
   text-align: center;
   font-size: 22px;
   font-weight: bold;
-  font-family: "HGP行書体", "HGS行書体", serif;
+  font-family: "KouzanBrush", serif;
 }
 
 /* ---------- お知らせ画面の案内---------- */
@@ -105,6 +105,10 @@ main p {
   cursor: pointer;
   transition: 0.2s;
   font-family: inherit;
+}
+.btn a {
+  color: var(--color-on-primary);
+  text-decoration: none;
 }
 
 .btn:hover {

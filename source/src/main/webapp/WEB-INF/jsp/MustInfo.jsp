@@ -4,19 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;700&display=swap" rel="stylesheet">
     <title>必要情報記入</title>
-
-    <style>
-        body {
-            font-family: sans-serif;
+<style>
+@font-face {
+  font-family: "KouzanBrush";
+  src: url("/d2/fonts/Satuki.woff2") format("woff2"),
+  font-display: swap;
+}
+body {
+	font-family: "KouzanBrush", serif;
             margin: 0;
             padding: 20px;
 
             /* ★ 背景を花柄に統一 */
-            background-image: url("${pageContext.request.contextPath}/img/hanagara.png");
-            background-size: cover;
+            background-image: url("${pageContext.request.contextPath}/img/hanagara2.png");
+            background-size: auto;
             background-position: center;
-            background-repeat: no-repeat;
+            background-repeat: repeat;
         }
 
         h1 {

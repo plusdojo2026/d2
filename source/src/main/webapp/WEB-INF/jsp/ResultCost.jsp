@@ -5,7 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;700&display=swap" rel="stylesheet">
     <title>料金精算画面</title>
+    <style>@font-face {
+  font-family: "KouzanBrush";
+  src: url("/d2/fonts/Satuki.woff2") format("woff2"),
+  font-display: swap;
+}
+	</style>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/ResultCost.css">
 </head>
 <body>

@@ -1,0 +1,79 @@
+@charset "UTF-8";
+
+:root {
+  --color-bg:           #22202a;                  /* 墨：背景の予備色 */
+  --color-card:         rgba(255, 255, 255, 0.97);/* カード背景（ほぼ白・わずかに透ける） */
+  --color-card-text:    #333333;                  /* カード上の文字 */
+  --color-on-primary:   #ffffff;                  /* 主ボタンの文字 */
+  --color-line:         #cccccc;                  /* 枠線・区切り線 */
+  --color-line-hover:   #f0f0f0;                  /* ホバー時の背景 */
+  --color-primary:      #ff1a1a;                  /* 主ボタン（赤） */
+  --color-primary-dark: #d90000;                  /* 主ボタン ホバー */
+  --color-shadow:       rgba(0, 0, 0, 0.15);      /* 影 */
+}
+
+
+
+/* ---------- 土台（背景＝花柄） ---------- */
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 15px;
+  background-color: var(--color-bg);
+  background-image: url("../img/hanagara.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: "KouzanBrush", serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-card-text);
+}
+
+/* ---------- カード（花柄の上に浮く白い面） ---------- */
+main {
+  width: 80%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 30px;
+  background: var(--color-card);
+  color: var(--color-card-text);
+  border-radius: 12px;
+  box-shadow: 0 0 15px var(--color-shadow);
+}
+
+/* ---------- タイトル ---------- */
+h1 {
+  margin: 0 0 25px;
+  text-align: center;
+  font-size: 22px;
+}
+
+/* ---------- 情報の各行 ---------- */
+main p {
+  margin: 8px 0;
+  font-weight: bold;
+  border-bottom: 1px solid var(--color-line);
+}
+
+/* ---------- 確定ボタン ---------- */
+.btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px 25px;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn a {
+  color: var(--color-on-primary);
+  text-decoration: none;
+}
+.btn:hover {
+  background-color: var(--color-primary-dark);
+}

@@ -14,7 +14,7 @@ import dto.Request;
 
 public class RequestDao {
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/d2";
-    private static final String DB_USER = "d2";
+	private static final String DB_USER = "d2";
     private static final String DB_PASS = "YVw2aAvYdfh4Kdmp";
 	// 引数req指定された項目で検索して、取得されたデータのリストを返す
 	//予約成功
@@ -268,7 +268,7 @@ public class RequestDao {
 
 				// SQLに WHERE 句を追加
 				String sql = "SELECT r.id_reservation,r.thisdate, r.date, r.time, r.address, r.category, "
-						+ "r.category, cst.optionCost AS CostSt, r.option1, c1.optionCost AS Cost1, r.option2, c2.optionCost AS Cost2, "
+						+ "cst.optionCost AS CostSt, r.option1, c1.optionCost AS Cost1, r.option2, c2.optionCost AS Cost2, "
 						+ "r.option3, c3.optionCost AS Cost3, r.option4, c4.optionCost AS Cost4, "
 						+ "r.total_amount, r.payment_method, r.image FROM Request r " 
 						+ "LEFT JOIN cost cst ON r.category = cst.optionNAME "
@@ -276,7 +276,8 @@ public class RequestDao {
 						+ "LEFT JOIN cost c2 ON r.option2 = c2.optionNAME "
 						+ "LEFT JOIN cost c3 ON r.option3 = c3.optionNAME "
 						+ "LEFT JOIN cost c4 ON r.option4 = c4.optionNAME "
-						+"WHERE id_chara = ? AND success = 1";
+						+ "WHERE id_chara = ? AND success = 1 "
+						+ "ORDER BY r.id_reservation DESC";
 				
 				PreparedStatement pStmt = conn.prepareStatement(sql);
 				

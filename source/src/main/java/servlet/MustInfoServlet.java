@@ -3,6 +3,7 @@ package servlet;
 import java.io.File;
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +35,7 @@ public class MustInfoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+    	try {
         request.setCharacterEncoding("UTF-8");
 
         // ★ JobSelect → OptionSelect のデータをセッションから取得
@@ -58,15 +59,19 @@ public class MustInfoServlet extends HttpServlet {
         // ★ 画像ファイル
         Part imagePart = request.getPart("image_file");
         String fileName = getFileName(imagePart);
+        
+        String fileNameTime = System.currentTimeMillis() + fileName;
 
         // 保存先（/upload）
-        String uploadPath = getServletContext().getRealPath("/upload");
+        String uploadPath = getServletContext().getRealPath("/") + "upload";
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) uploadDir.mkdir();
 
         if (fileName != null && !fileName.isEmpty()) {
-            imagePart.write(uploadPath + File.separator + fileName);
+            imagePart.write(uploadPath + File.separator + fileNameTime);
         }
+        
+        
 
         // ★ ReservationDTO にまとめる
         Request dto = new Request(
@@ -81,7 +86,7 @@ public class MustInfoServlet extends HttpServlet {
                 email,
                 destination,
                 note,
-                fileName
+                fileNameTime
         );
         
         HttpSession session = request.getSession();
@@ -108,7 +113,12 @@ public class MustInfoServlet extends HttpServlet {
         // ★ 完了画面へ
         response.sendRedirect("/d2/ResultCostServlet");
         return;
-    }
+    	}catch(Exception e){
+    		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Error.jsp");
+    			dispatcher.forward(request, response);
+    			return;
+        }
+        }
 
     // ファイル名取得
     private String getFileName(Part part) {

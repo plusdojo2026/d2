@@ -28,15 +28,10 @@
                     </summary>
                     <div class="accordion">
 	                    <div class="details">
-	                    <!-- <c:if test="${not empty item.image}">
-		                            <div class="image">
-									   <img src="${pageContext.request.contextPath}/NewsServlet?id=${item.id_reservation}" alt="画像">
-									</div>
-		                    </c:if> -->
 		                   
 							<c:if test="${not empty item.image}">
 							    <div class="image">
-							        <img src="${pageContext.request.contextPath}/upload/${item.image}?t=<%= System.currentTimeMillis() %>" alt="画像">
+							        <img src="${pageContext.request.contextPath}/upload/${item.image}" alt="画像">
 							    </div>
 							</c:if>
 													
@@ -67,10 +62,10 @@
                         <span class="news_meta">
                             <span class="This_day">${item.date_finish}</span>
                             <span class="news_title">${item.category}依頼完了いたしました。</span>
-                          	
                        </span>
                     </summary>
-                    <div class="accordion">
+                    <div class="accordion_finish">
+                    	<p>依頼実行時刻：${item.time_finish}</p>
                     	<p>${item.category}のご依頼が完了いたしましたのでご連絡させていただきます。</p>
                         <p class="news_body"></p> </div>
                 </details>
