@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>ログイン</title>
+<<<<<<< Updated upstream
 
 <style>
 /* ▼ 背景（花柄） */
@@ -146,9 +147,13 @@ body {
 
 </style>
 
+=======
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css">
+>>>>>>> Stashed changes
 </head>
 
 <body>
+<<<<<<< Updated upstream
 
 <header>
     <img src="${pageContext.request.contextPath}/img/logo.png" alt="しの結び" class="logo">
@@ -180,5 +185,22 @@ function togglePassword() {
 }
 </script>
 
+=======
+<header>
+	<img src="${pageContext.request.contextPath}/img/logo.png" alt="しの結び" class="logo">
+</header>
+<main>
+    <p id="msg"></p>
+        <form method="POST" action="/d2/LoginServlet" id="form">
+            <input type="text" name="user_id" placeholder="ID"><br>
+            <input type="password" name="password" placeholder="PW"><br>
+            <input type="submit" value="ログイン"><br>
+        </form>
+        <form method="GET" action="/d2/NewRegistServlet">
+            <input type="submit" value="新規登録">
+        </form>
+ </main>
+ <script src="js/Login.js"></script>
+>>>>>>> Stashed changes
 </body>
 </html>

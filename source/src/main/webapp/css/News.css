@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 @charset "UTF-8";
 * {
     box-sizing: border-box;
@@ -218,4 +219,96 @@ p {
 	font-size: 2.3rem;
 	margin:10px;
 	padding:10px;
+=======
+/* ============================================
+   News.css — 通知画面固有スタイル
+   ※ News.jsp の実物クラス（details/summary構造）に対応
+   共通スタイルは common.css が担当
+   ============================================ */
+
+/* 「戻る」リンク + タイトルの横並び */
+.index {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-block: var(--space-md);
+}
+
+/* 通知1件 = アコーディオン（details要素）。3種類とも同じカード見た目 */
+.news_request,
+.news_news,
+.news_finish {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    margin-block: var(--space-sm);
+    overflow: hidden;
+}
+
+/* クリックで開く見出し部分（summary） */
+.news_text {
+    padding: var(--space-md);
+    cursor: pointer;
+    list-style: none;
+}
+
+/* ブラウザ標準の開閉マーカー（▶）を消す */
+.news_text::-webkit-details-marker {
+    display: none;
+}
+
+/* 日付とタイトルを縦に並べる */
+.news_meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* 日付（補助色で小さく） */
+.list_day {
+    color: var(--color-text-sub);
+    font-size: 0.8125rem;
+}
+
+/* タイトル */
+.news_title {
+    color: var(--color-text);
+    font-size: 1rem;
+}
+
+/* 開いたときに出る中身 */
+.accordion {
+    padding: var(--space-md);
+    border-top: 1px solid var(--color-border);
+}
+
+/* 予約画像 */
+.image img {
+    max-width: 100%;
+    border-radius: var(--radius);
+    margin-block: var(--space-sm);
+}
+
+/* 依頼実行日時 */
+.day {
+    color: var(--color-text-sub);
+    font-size: 0.875rem;
+}
+
+/* 本文 */
+.news_body {
+    color: var(--color-text);
+}
+
+/* 料金エリア */
+.price {
+    margin-top: var(--space-md);
+}
+
+/* 合計金額（通知の中でも主役なので強調） */
+.total_price {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+>>>>>>> Stashed changes
 }
