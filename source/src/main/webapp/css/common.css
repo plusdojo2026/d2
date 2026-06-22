@@ -1,26 +1,45 @@
 @charset "UTF-8";
 
 /* ============================================
-   common.css — 全画面共通スタイル
+   common.css — 全画面共通の土台
    しの結び / 忍者テーマ ダークUI
    担当: 由谷
+   中身：デザイン / 背景 / ロゴ
    ============================================ */
 
-/* ---------- デザイントークン（色の決まりごとを1か所に） ---------- */
+/* ---------- デザイントークン（色の定義・全画面で共有） ---------- */
 :root {
     --color-bg: #22202a;        /* 背景（墨） */
-    --color-surface: #2d2a38;   /* カード（背景より明るい墨／手前に浮く層） */
+    --color-surface: #2d2a38;   /* カード（手前に浮く層） */
     --color-text: #f2ede0;      /* メインテキスト（生成り白） */
-    --color-text-sub: #9b958a;  /* 補助テキスト（控えめな情報） */
+    --color-text-sub: #9b958a;  /* 補助テキスト */
     --color-main: #e3d3ad;      /* 主ボタン（生成り） */
     --color-wash: #79c4e0;      /* 洗車（水色） */
 }
 
-/* ---------- ロゴ（全画面共通） ---------- */
+/* ---------- ベース（背景・画面全体） ---------- */
+body {
+    margin: 0;
+    min-height: 100vh;          /* 画面の高さいっぱいまで広げる → 背景が全面に出る */
+    background-color: var(--color-bg);          /* 画像が読めないときの予備色 */
+    background-image: url("../img/haikei.png");     /* CSSファイル基準の相対パス（css → ../ → img） */
+    background-size: cover;                      /* 画面いっぱいに（はみ出しは切り取り） */
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--color-text);   /* 生成り白（全文字に継承される） */
+    font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* ---------- ロゴ（画面幅いっぱい） ---------- */
 .logo {
-    display: block;     /* 画像をブロック要素に → margin: auto による中央寄せが効く */
-    width: 100%;        /* 入れ物（header）の幅いっぱいに広がる */
-    max-width: 500px;   /* ただし、ここまでで頭打ち（大画面で巨大化させない上限） */
-    height: auto;       /* 横幅に合わせて高さを自動調整 → 1794×592 の縦横比を保つ */
-    margin: 0 auto;     /* 上下0・左右auto で中央寄せ */
+    display: block;     /* 下の余計な隙間をなくす */
+    width: 100%;        /* 画面の端から端まで */
+    height: auto;       /* 縦横比を保つ */
+}
+
+header {
+    border: 5px solid var(--color-main);          /* 生成りの枠線でロゴを囲う */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);   /* 下に影を落として浮かせる */
 }
