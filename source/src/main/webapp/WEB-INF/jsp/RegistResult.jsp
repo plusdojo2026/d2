@@ -168,7 +168,7 @@ body {
 	</span>
 	</p>
 	<c:if test="${fn:contains(result.backTo, '/d2/LoginServlet')}">
-		<button onclick="location.href='${result.backTo}'" class="btn">ログインページへ戻る</button>
+		<button onclick="location.href='${result.backTo}'" class="btn">ログインページ</button>
 	</c:if>
 	<c:if test="${fn:contains(result.backTo, '/d2/NewRegistServlet')}">
 		<button onclick="location.href='${result.backTo}'" class="btn"> 新規登録へ戻る</button>

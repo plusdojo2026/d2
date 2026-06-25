@@ -63,8 +63,13 @@ public class ResultServlet extends HttpServlet {
 				request.setAttribute("result", data);
 
 				final Request dataFinal = data;
+				
+				Boolean alreadyScheduled = (Boolean) session.getAttribute("alreadyScheduled");
 
-				scheduler.schedule(new Runnable(){
+				if (alreadyScheduled == null || !alreadyScheduled) {
+
+				    session.setAttribute("alreadyScheduled", true);
+				    scheduler.schedule(new Runnable(){
 					@Override
 					public void run(){
 						Finish fDto = new Finish();
@@ -78,7 +83,8 @@ public class ResultServlet extends HttpServlet {
 						fDao.insert(fDto);
 					}
 
-				}, 30, TimeUnit.SECONDS);			
+				}, 30, TimeUnit.SECONDS);
+				}
 				
 		 // 予約成功画面にフォワードする
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/Success.jsp");

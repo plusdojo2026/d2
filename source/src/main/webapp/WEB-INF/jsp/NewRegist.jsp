@@ -134,8 +134,8 @@ main {
     <p id="msg"></p>
 
     <form method="POST" action="/d2/NewRegistServlet" id="form">
-        <input type="text" name="user_id" class="text" placeholder="ID">
-        <input type="password" name="password" id="password" class="text" placeholder="PW">
+        <input type="text" name="user_id" class="text" placeholder="ID 8から16文字">
+        <input type="password" name="password" id="password" class="text" placeholder="PW 8から16文字">
         <input type="password" name="confirmpw" id="confirmpw" class="text" placeholder="PW確認用">
 
         <input type="submit" value="新規登録" class="btn">
