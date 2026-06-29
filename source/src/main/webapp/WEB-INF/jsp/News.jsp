@@ -41,10 +41,10 @@
 	                        </div>
 	                   </div> 
                         <div class="price">
-                            <c:if test="${not empty item.option1}"><p>・${item.option1}&nbsp;${item.cost1}</p></c:if>
-                            <c:if test="${not empty item.option2}"><p>・${item.option2}&nbsp;${item.cost2}</p></c:if>
-                            <c:if test="${not empty item.option3}"><p>・${item.option3}&nbsp;${item.cost3}</p></c:if>
-                            <c:if test="${not empty item.option4}"><p>・${item.option4}&nbsp;${item.cost4}</p></c:if>
+                            <c:if test="${not empty item.option1}"><p>・${item.option1}&nbsp;${item.cost1}円</p></c:if>
+                            <c:if test="${not empty item.option2}"><p>・${item.option2}&nbsp;${item.cost2}円</p></c:if>
+                            <c:if test="${not empty item.option3}"><p>・${item.option3}&nbsp;${item.cost3}円</p></c:if>
+                            <c:if test="${not empty item.option4}"><p>・${item.option4}&nbsp;${item.cost4}円</p></c:if>
                             <p class="total_price">合計金額 : ${item.total_amount}円</p>  
                         </div>
                     
